@@ -1,7 +1,7 @@
 /*
  * @Author: Peng zhang
  * @Date: 2021-01-06 10:12:49
- * @LastEditTime: 2021-04-25 10:11:30
+ * @LastEditTime: 2021-08-08 16:28:37
  * @Description:
  */
 import { FetchService } from '@/utils/axois';
@@ -19,8 +19,7 @@ export default class {
 	 * @method
 	 */
 	public async login(params: { payload?: any; query?: {}; path?: {} }) {
-		let path = '';
-		path = '/user/login';
+		let path = '/user/login';
 		let body: any;
 		let queryParameters: any = {};
 

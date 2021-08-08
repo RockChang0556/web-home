@@ -1,5 +1,6 @@
 import axios, { Method } from 'axios';
 import qs from 'qs';
+import { ElMessage } from 'element-plus';
 
 interface FetchService {
 	post(url: string, data?: any): Promise<any>;
@@ -47,14 +48,14 @@ function getInstance(serverPath: string) {
 			if (res.data.code === 0) {
 				return Promise.resolve(res);
 			} else {
-				// rmessage.error(res.data.message || '服务器异常, 请稍后重试!');
+				ElMessage.error(res.data.message || '服务器异常, 请稍后重试!');
 				return Promise.reject(res.data);
 			}
 		},
 		(error: any) => {
 			const res = error.response;
 			if (String(res?.status) === '401') {
-				// rmessage.error('token过期,请重新登陆!');
+				ElMessage.error('token过期,请重新登陆!');
 				localStorage.removeItem('token');
 				// if (location.pathname.indexOf('/404') === -1) {
 				// 	window.location.replace(`${location.origin}/404`);
@@ -62,7 +63,7 @@ function getInstance(serverPath: string) {
 			} else {
 				switch (res.data?.code) {
 					default:
-					// rmessage.error('网络连接出现错误, 请稍后重试!');
+						ElMessage.error('网络连接出现错误, 请稍后重试!');
 				}
 				return Promise.reject(res.data);
 			}

@@ -6,6 +6,11 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'home',
 		component: () => import('@/views/home/home.vue'),
 	},
+	{
+		path: '/login',
+		name: 'login',
+		component: () => import('@/views/login/index.vue'),
+	},
 ];
 const router = createRouter({
 	history: createWebHistory(import.meta.env.VITE_BASE_URL),
