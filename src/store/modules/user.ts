@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { extendsServiceAuto } from '@/services';
+import { UserApi } from '@/services';
 import router from '@/router';
 
 export interface UserProps {
@@ -29,7 +28,7 @@ const actions = {
 		router.push('/login');
 	},
 	async getUserInfo({ commit }: any) {
-		const userInfo = await extendsServiceAuto.getCurrentUser({});
+		const userInfo = await UserApi.getCurrentUser();
 		if (userInfo && userInfo.code === 0 && userInfo.data.id) {
 			commit('setUserInfo', userInfo.data);
 		}

@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-08 19:06:29
+ * @LastEditTime: 2021-08-10 00:42:51
  * @Description: 登录表单
 -->
 <template>
@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue';
-import { extendsServiceAuto } from '@/services';
+import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
 
 export default defineComponent({
@@ -70,8 +70,11 @@ export default defineComponent({
 			});
 		};
 		const toLogin = async () => {
-			const res = await extendsServiceAuto.login({ payload: loginForm });
-			ElMessage.success(res.message);
+			const data = await UserApi.login(loginForm);
+			ElMessage.success(data.message);
+			setTimeout(() => {
+				location.href = location.origin;
+			}, 1000);
 		};
 		return {
 			loginFormRef,
