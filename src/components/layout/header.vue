@@ -61,8 +61,9 @@ export default defineComponent({
 	justify-content: space-between;
 	align-items: center;
 	.header-logo {
+		height: 50px;
 		img {
-			height: 50px;
+			height: 100%;
 		}
 	}
 	.el-button span {
