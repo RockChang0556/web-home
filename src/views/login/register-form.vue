@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:34:51
- * @LastEditTime: 2021-08-10 14:14:55
+ * @LastEditTime: 2021-08-10 18:28:44
  * @Description: 
 -->
 <template>
@@ -40,6 +40,7 @@
 					type="password"
 					placeholder="密码"
 					v-model="registerForm.password"
+					show-password
 					autocomplete="off"
 				></el-input>
 			</el-form-item>
@@ -48,6 +49,7 @@
 					type="password"
 					placeholder="确认密码"
 					v-model="registerForm.confirm_password"
+					show-password
 					autocomplete="off"
 				></el-input>
 			</el-form-item>
@@ -125,14 +127,14 @@ function useRules(registerForm: RegisterProps) {
 		name: [
 			{ required: true, message: '请输入昵称', trigger: 'blur' },
 			{
-				pattern: /^([a-zA-Z0-9_\u4e00-\u9fa5]{4,16})$/,
-				message: '昵称为数字,汉字,下划线, 4 到 16 个字符',
+				pattern: /^([a-zA-Z0-9_\u4e00-\u9fa5]{2,10})$/,
+				message: '昵称长度在2~10之间, 支持数字,字母,汉字,下划线',
 				trigger: 'blur',
 			},
 		],
 		email: [
 			{ required: true, message: '请输入邮箱', trigger: 'blur' },
-			{ min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur' },
+			{ min: 6, max: 30, message: '邮箱长度在6~30之间', trigger: 'blur' },
 			{
 				pattern: /(^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$)/,
 				message: '邮箱格式不正确',
@@ -141,10 +143,9 @@ function useRules(registerForm: RegisterProps) {
 		],
 		password: [
 			{ required: true, message: '请输入密码', trigger: 'blur' },
-			{ min: 6, message: '长度在不得少于 6 个字符', trigger: 'blur' },
 			{
-				pattern: /^[a-zA-Z]\w{5,17}$/,
-				message: '密码以字母开头，长度在6~18之间，只能包含字母、数字和下划线',
+				pattern: /^[\w#@!~%^&*]{6,18}$/,
+				message: '密码长度在6~18之间，支持字母、数字,特殊字符',
 				trigger: 'blur',
 			},
 		],

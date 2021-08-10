@@ -17,9 +17,7 @@
 				<div class="overlay">
 					<div class="overlay-panel overlay-left">
 						<h1>Welcome Back!</h1>
-						<p>
-							To keep connected with us please login with your personal info
-						</p>
+						<p>有账号了吗? 直接去登录吧</p>
 						<button class="ghost" @click="onSwitchRegister(false)">
 							去登录
 						</button>

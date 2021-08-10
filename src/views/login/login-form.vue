@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-10 10:27:29
+ * @LastEditTime: 2021-08-10 18:26:36
  * @Description: 登录表单
 -->
 <template>
@@ -32,11 +32,16 @@
 					type="password"
 					placeholder="密码"
 					v-model="loginForm.password"
+					show-password
 					autocomplete="off"
 				></el-input>
 			</el-form-item>
 			<el-form-item>
 				<div class="forgot-pass">
+					<span
+						:style="{ float: 'left', width: '30px', height: '20px' }"
+						@click="toAdmin"
+					></span>
 					<a href="#" class="">忘记密码?</a>
 				</div>
 				<el-button type="danger" round :loading="loading" @click="onSubmitForm">
@@ -59,10 +64,14 @@ export default defineComponent({
 	props: {},
 	setup() {
 		const loginForm = reactive({
-			account: 'peng0556@qq.com',
-			password: 'a123456',
+			account: '',
+			password: '',
 		});
 		const { loginRules } = useRules();
+		const toAdmin = () => {
+			loginForm.account = 'peng0556@qq.com';
+			loginForm.password = 'a123456';
+		};
 
 		// 登录参数校验
 		const loginFormRef: any = ref(null);
@@ -90,6 +99,7 @@ export default defineComponent({
 			}
 		};
 		return {
+			toAdmin,
 			loginForm,
 			loginRules,
 			loginFormRef,
@@ -109,27 +119,20 @@ function useRules() {
 			callback();
 		}
 	};
-	const validatePass = (rule: any, value: any, callback: any) => {
-		const passReg = /^[a-zA-Z]\w{5,17}$/;
-		if (!passReg.test(value)) {
-			callback(
-				new Error('密码以字母开头，长度在6~18之间，只能包含字母、数字和下划线')
-			);
-		} else {
-			callback();
-		}
-	};
 
 	const loginRules = {
 		account: [
-			{ required: true, message: '请输入账号', trigger: 'blur' },
-			{ min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur' },
+			{ required: true, message: '请输入账号(手机/邮箱)', trigger: 'blur' },
+			{ min: 6, max: 30, message: '账号长度在6~30之间', trigger: 'blur' },
 			{ validator: validateAccount, trigger: 'blur' },
 		],
 		password: [
 			{ required: true, message: '请输入密码', trigger: 'blur' },
-			{ min: 6, message: '长度在不得少于 6 个字符', trigger: 'blur' },
-			{ validator: validatePass, trigger: 'blur' },
+			{
+				pattern: /^[\w#@!~%^&*]{6,18}$/,
+				message: '密码长度在6~18之间，支持字母、数字,特殊字符',
+				trigger: 'blur',
+			},
 		],
 	};
 	return { loginRules };
