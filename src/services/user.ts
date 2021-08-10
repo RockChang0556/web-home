@@ -2,8 +2,7 @@
 import _axios, { post, get, put } from '@/utils/axios';
 import store from '@/store';
 import { saveTokens } from '@/utils/token';
-
-export interface UserLogin {}
+import { RegisterProps } from '@/types/service';
 
 export default class User {
 	/**
@@ -33,6 +32,14 @@ export default class User {
 		const { data } = await post('/user/login', params);
 		const { data: tokens } = data;
 		saveTokens(tokens.access_token, tokens.refresh_token);
+		return data;
+	}
+	/**
+	 * @description: 注册
+	 * @param {object} params
+	 */
+	static async register(params: RegisterProps) {
+		const { data } = await post('/user/register', params);
 		return data;
 	}
 

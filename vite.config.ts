@@ -9,21 +9,21 @@ export default defineConfig({
 	plugins: [
 		vue(),
 		// element-plus 按需引入配置
-		styleImport({
-			libs: [
-				{
-					libraryName: 'element-plus',
-					esModule: true,
-					ensureStyleFile: true,
-					resolveStyle: name => {
-						return `element-plus/lib/theme-chalk/${name}.css`;
-					},
-					resolveComponent: name => {
-						return `element-plus/lib/${name}`;
-					},
-				},
-			],
-		}),
+		// styleImport({
+		// 	libs: [
+		// 		{
+		// 			libraryName: 'element-plus',
+		// 			esModule: true,
+		// 			ensureStyleFile: true,
+		// 			resolveStyle: name => {
+		// 				return `element-plus/lib/theme-chalk/${name}.css`;
+		// 			},
+		// 			resolveComponent: name => {
+		// 				return `element-plus/lib/${name}`;
+		// 			},
+		// 		},
+		// 	],
+		// }),
 	],
 	resolve: {
 		alias: {

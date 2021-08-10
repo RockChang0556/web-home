@@ -181,17 +181,17 @@ _axios.interceptors.response.use(
 		});
 	},
 	error => {
-		if (!error.response) {
-			ElMessage.error('请检查 API 是否异常');
-			console.log('error', error);
-		}
-
 		// 判断请求超时
 		if (
 			error.code === 'ECONNABORTED' &&
 			error.message.indexOf('timeout') !== -1
 		) {
-			ElMessage.warning('请求超时');
+			ElMessage.error('请求超时');
+			return Promise.reject(error);
+		}
+		if (!error.response) {
+			ElMessage.error('请检查 API 是否异常');
+			return Promise.reject(error);
 		}
 		return Promise.reject(error);
 	}

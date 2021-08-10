@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-10 00:42:51
+ * @LastEditTime: 2021-08-10 10:27:29
  * @Description: 登录表单
 -->
 <template>
@@ -27,7 +27,7 @@
 					autocomplete="off"
 				></el-input>
 			</el-form-item>
-			<el-form-item label="确认密码" prop="password">
+			<el-form-item label="密码" prop="password">
 				<el-input
 					type="password"
 					placeholder="密码"
@@ -39,7 +39,9 @@
 				<div class="forgot-pass">
 					<a href="#" class="">忘记密码?</a>
 				</div>
-				<button @click="onSubmitForm('loginForm')">提交</button>
+				<el-button type="danger" round :loading="loading" @click="onSubmitForm">
+					登录
+				</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -49,6 +51,7 @@
 import { defineComponent, reactive, ref } from 'vue';
 import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
+import { getQueryString } from '@/utils/util';
 
 export default defineComponent({
 	name: 'login-content',
@@ -61,26 +64,37 @@ export default defineComponent({
 		});
 		const { loginRules } = useRules();
 
+		// 登录参数校验
 		const loginFormRef: any = ref(null);
-		const onSubmitForm = (formName: string) => {
+		const onSubmitForm = () => {
 			loginFormRef.value.validate((valid: boolean) => {
 				if (valid) {
 					toLogin();
 				}
 			});
 		};
+
+		// 登录逻辑
+		const loading = ref(false);
 		const toLogin = async () => {
-			const data = await UserApi.login(loginForm);
-			ElMessage.success(data.message);
-			setTimeout(() => {
-				location.href = location.origin;
-			}, 1000);
+			try {
+				loading.value = true;
+				await UserApi.login(loginForm);
+				ElMessage.success('登录成功');
+				setTimeout(() => {
+					const redirectUrl = getQueryString('redirect_uri');
+					location.href = redirectUrl || location.origin;
+				}, 1000);
+			} finally {
+				loading.value = false;
+			}
 		};
 		return {
-			loginFormRef,
 			loginForm,
 			loginRules,
+			loginFormRef,
 			onSubmitForm,
+			loading,
 		};
 	},
 });

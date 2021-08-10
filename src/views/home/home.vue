@@ -1,6 +1,6 @@
 <template>
-	<div class="home">
-		<global-header></global-header>
+	<div class="home" v-loading.fullscreen.lock="loading">
+		<global-header v-if="!loading" :user="currentUser"></global-header>
 		<header>
 			<h1>Welcome to my world</h1>
 			<p>这里是我的个人站, 不一定有什么内容</p>
@@ -39,14 +39,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
+import { getToken } from '@/utils/token';
 import GlobalHeader from '@/components/layout/header.vue';
 export default defineComponent({
 	name: 'home',
 	components: { GlobalHeader },
 	props: {},
 	setup() {
-		return {};
+		const store = useStore();
+		const currentUser = computed(() => store.state.user.userInfo);
+		const loading = ref(false);
+
+		// 获取用户信息
+		const getCurrentUser = async () => {
+			const access_token = getToken('access_token');
+			if (!access_token) return;
+			try {
+				loading.value = true;
+				await store.dispatch('user/getUserInfo');
+			} finally {
+				loading.value = false;
+			}
+		};
+		getCurrentUser();
+
+		return {
+			currentUser,
+			loading,
+		};
 	},
 });
 </script>

@@ -9,5 +9,8 @@ const config = {
 	stagnateTime: 60 * 60 * 1000, // 无操作停滞时间，默认1小时
 	baseURL: import.meta.env.VITE_BASE_API, // API接口baseURL，在根目录.env文件查找对应环境变量配置
 };
-
 export default config;
+
+export const constant = {
+	loginUrl: `/login?redirect_uri=${location.href}`, // 登陆url,登陆后重定向到原始页面
+};

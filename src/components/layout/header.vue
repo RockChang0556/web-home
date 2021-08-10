@@ -4,17 +4,20 @@
 			<img src="/logo.png" alt="logo" />
 		</router-link>
 		<div v-if="!user.id">
-			<router-link to="/login" class="btn btn-success mr-2"> 登录 </router-link>
-			<router-link to="/register" class="btn btn-outline-light">
-				注册
+			<router-link to="/login">
+				<el-button type="danger" plain>登录</el-button>
 			</router-link>
 		</div>
-		<dropdown v-else>
-			{{ user.name }}
-			<template #menu>
-				<a class="dropdown-item" href="#" @click.prevent="logout">退出登录</a>
+		<el-dropdown v-else>
+			<span class="el-dropdown-link">
+				{{ user.name }}<i class="el-icon-arrow-down el-icon--right"></i>
+			</span>
+			<template #dropdown>
+				<el-dropdown-menu>
+					<el-dropdown-item @click.prevent="logout">退出登录</el-dropdown-item>
+				</el-dropdown-menu>
 			</template>
-		</dropdown>
+		</el-dropdown>
 	</div>
 </template>
 
@@ -56,9 +59,22 @@ export default defineComponent({
 	border-top: 4px solid mix(purple, white);
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	.header-logo {
 		img {
 			height: 50px;
+		}
+	}
+	.el-button span {
+		letter-spacing: 5px;
+		padding-left: 4px;
+	}
+	.el-dropdown {
+		min-width: 80px;
+		padding: 5px 0;
+		.el-dropdown-link {
+			float: right;
+			cursor: pointer;
 		}
 	}
 }

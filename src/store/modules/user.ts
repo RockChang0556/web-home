@@ -1,5 +1,6 @@
 import { UserApi } from '@/services';
 import router from '@/router';
+import { removeToken } from '@/utils/token';
 
 export interface UserProps {
 	id?: number;
@@ -24,8 +25,8 @@ const getters = {};
 const actions = {
 	logout({ commit }: any) {
 		commit('setUserInfo', {});
-		localStorage.removeItem('token');
-		router.push('/login');
+		removeToken();
+		router.push('/');
 	},
 	async getUserInfo({ commit }: any) {
 		const userInfo = await UserApi.getCurrentUser();

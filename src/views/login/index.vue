@@ -4,7 +4,7 @@
 			<div class="form-container sign-up-container">
 				<div class="form-container-cont">
 					<h1>创建账号</h1>
-					<register-form></register-form>
+					<register-form @switch-register="onSwitchRegister"></register-form>
 				</div>
 			</div>
 			<div class="form-container sign-in-container">
@@ -26,7 +26,7 @@
 					</div>
 					<div class="overlay-panel overlay-right">
 						<h1>Hello, Friend!</h1>
-						<p>第一次来吗? 先来整个账号呗</p>
+						<p>第一次来吗? 先注册个账号呗</p>
 						<button class="ghost" @click="onSwitchRegister(true)">
 							去注册
 						</button>
@@ -108,12 +108,19 @@ function useLoginOrRegister() {
 		color: #ffffff;
 		font-size: 12px;
 		font-weight: bold;
-		padding: 12px 40px;
+		width: 120px;
+		height: 40px;
 		letter-spacing: 1px;
 		text-transform: uppercase;
 		transition: transform 80ms ease-in;
+		cursor: pointer;
+		transition: 0.3s;
 		&:active {
 			transform: scale(0.95);
+		}
+		&:hover {
+			background-color: none;
+			width: 140px;
 		}
 		&:focus {
 			outline: none;
@@ -121,6 +128,9 @@ function useLoginOrRegister() {
 		&.ghost {
 			background-color: transparent;
 			border-color: #ffffff;
+			&:hover {
+				opacity: 0.9;
+			}
 		}
 	}
 
