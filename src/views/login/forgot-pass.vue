@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-12 20:26:57
- * @LastEditTime: 2021-08-13 12:18:00
+ * @LastEditTime: 2021-08-13 13:42:33
  * @Description:  忘记密码
 -->
 <template>
@@ -65,6 +65,7 @@
 import { defineComponent, reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { UserApi } from '@/services';
+import { emailRule, codeRule, passwordRule } from '@/config/rule';
 
 export default defineComponent({
 	name: 'defaults',
@@ -101,7 +102,8 @@ export default defineComponent({
 		// 发送验证码
 		const { sendBtn, onClickSendBtn } = useSendCode(
 			forgotPassFormRef,
-			forgotPassForm
+			forgotPassForm,
+			'修改密码'
 		);
 		return {
 			visible,
@@ -119,7 +121,7 @@ export default defineComponent({
 
 // 打开/关闭弹框
 function useSwitchDialog() {
-	const visible = ref(true);
+	const visible = ref(false);
 	const onChangeVisible = (isLogin: boolean) => {
 		visible.value = isLogin;
 	};
@@ -131,39 +133,18 @@ function useSwitchDialog() {
 // 表单规则
 function useRules() {
 	const forgotPassRules = {
-		email: [
-			{ required: true, message: '请输入邮箱', trigger: 'blur' },
-			{ min: 6, max: 30, message: '邮箱长度在6~30之间', trigger: 'blur' },
-			{
-				pattern: /(^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$)/,
-				message: '邮箱格式不正确',
-				trigger: 'blur',
-			},
-		],
-		code: [
-			{ required: true, message: '请输入验证码', trigger: 'blur' },
-			{
-				pattern: /^[0-9]{4}$/,
-				message: '验证码为4位数字',
-				trigger: 'blur',
-			},
-		],
-		password: [
-			{ required: true, message: '请输入密码', trigger: 'blur' },
-			{
-				pattern: /^[\w#@!~%^&*]{6,18}$/,
-				message: '密码长度在6~18之间，支持字母、数字,特殊字符',
-				trigger: 'blur',
-			},
-		],
+		email: emailRule,
+		code: codeRule,
+		password: passwordRule,
 	};
 	return { forgotPassRules };
 }
 
 // 发送验证码
-function useSendCode(
-	forgotPassFormRef: any,
-	forgotPassForm: { email: string; code: string; password: string }
+export function useSendCode(
+	formRef: any,
+	formData: { email: string; [key: string]: any },
+	reason: string
 ) {
 	const sendBtn = reactive({
 		loading: false,
@@ -172,13 +153,13 @@ function useSendCode(
 		disabled: false,
 	});
 	const onClickSendBtn = () => {
-		forgotPassFormRef.value.validateField('email', async (errMsg: string) => {
+		formRef.value.validateField('email', async (errMsg: string) => {
 			if (!errMsg) {
 				try {
 					sendBtn.loading = true;
 					await UserApi.getEmailCode({
-						email: forgotPassForm.email,
-						reason: '修改密码',
+						email: formData.email,
+						reason,
 					});
 					ElMessage.success('验证码成功发送至您的邮箱, 请注意查收');
 					// 按钮倒计时
@@ -217,7 +198,7 @@ function useSendCode(
 			display: flex;
 			justify-content: space-between;
 			.el-input {
-				width: 220px;
+				width: calc(100% - 140px);
 			}
 			.el-button {
 				margin-left: 20px;

@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-12 21:40:15
+ * @LastEditTime: 2021-08-13 14:08:12
  * @Description: 登录表单
 -->
 <template>
@@ -38,13 +38,19 @@
 			</el-form-item>
 			<el-form-item>
 				<div class="forgot-pass">
-					<span
+					<!-- <span
 						:style="{ float: 'left', width: '30px', height: '20px' }"
-						@click="toAdmin"
-					></span>
+						@click="setFormData({ account: 'peng0556@qq.com' })"
+					></span> -->
 					<forgot-pass><a class="">忘记密码?</a></forgot-pass>
 				</div>
-				<el-button type="danger" round :loading="loading" @click="onSubmitForm">
+				<el-button
+					type="danger"
+					class="button"
+					round
+					:loading="loading"
+					@click="onSubmitForm"
+				>
 					登录
 				</el-button>
 			</el-form-item>
@@ -53,25 +59,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref, watch } from 'vue';
 import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
 import ForgotPass from './forgot-pass.vue';
 import { getQueryString } from '@/utils/util';
+import { passwordRule } from '@/config/rule';
 
 export default defineComponent({
 	name: 'login-content',
 	components: { ForgotPass },
-	props: {},
-	setup() {
+	props: {
+		active: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	setup(props) {
 		const loginForm = reactive({
 			account: '',
 			password: '',
 		});
 		const { loginRules } = useRules();
-		const toAdmin = () => {
-			loginForm.account = 'peng0556@qq.com';
-			loginForm.password = 'a123456';
+		const setFormData = (data: { account?: string; password?: string }) => {
+			loginForm.account = data.account || '';
+			loginForm.password = data.password || '';
 		};
 
 		// 登录参数校验
@@ -99,8 +111,17 @@ export default defineComponent({
 				loading.value = false;
 			}
 		};
+		// 监听是否当前tab, 离开当前tab清空表单值
+		watch(
+			() => props.active,
+			(val: boolean) => {
+				if (!val) {
+					setFormData({});
+					loginFormRef.value.clearValidate();
+				}
+			}
+		);
 		return {
-			toAdmin,
 			loginForm,
 			loginRules,
 			loginFormRef,
@@ -127,14 +148,7 @@ function useRules() {
 			{ min: 6, max: 30, message: '账号长度在6~30之间', trigger: 'blur' },
 			{ validator: validateAccount, trigger: 'blur' },
 		],
-		password: [
-			{ required: true, message: '请输入密码', trigger: 'blur' },
-			{
-				pattern: /^[\w#@!~%^&*]{6,18}$/,
-				message: '密码长度在6~18之间，支持字母、数字,特殊字符',
-				trigger: 'blur',
-			},
-		],
+		password: passwordRule,
 	};
 	return { loginRules };
 }

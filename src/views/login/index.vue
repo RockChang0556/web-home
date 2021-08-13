@@ -4,13 +4,16 @@
 			<div class="form-container sign-up-container">
 				<div class="form-container-cont">
 					<h1>创建账号</h1>
-					<register-form @switch-register="onSwitchRegister"></register-form>
+					<register-form
+						:active="isRegisterActive"
+						@switch-register="onSwitchRegister"
+					></register-form>
 				</div>
 			</div>
 			<div class="form-container sign-in-container">
 				<div class="form-container-cont">
 					<h1>登录</h1>
-					<login-form></login-form>
+					<login-form :active="!isRegisterActive"></login-form>
 				</div>
 			</div>
 			<div class="overlay-container">
@@ -18,14 +21,14 @@
 					<div class="overlay-panel overlay-left">
 						<h1>Welcome Back!</h1>
 						<p>有账号了吗? 直接去登录吧</p>
-						<button class="ghost" @click="onSwitchRegister(false)">
+						<button class="ghost button" @click="onSwitchRegister(false)">
 							去登录
 						</button>
 					</div>
 					<div class="overlay-panel overlay-right">
 						<h1>Hello, Friend!</h1>
 						<p>第一次来吗? 先注册个账号呗</p>
-						<button class="ghost" @click="onSwitchRegister(true)">
+						<button class="ghost button" @click="onSwitchRegister(true)">
 							去注册
 						</button>
 					</div>
@@ -99,7 +102,7 @@ function useLoginOrRegister() {
 		margin: 15px 0;
 	}
 
-	button {
+	.button {
 		border-radius: 20px;
 		border: 1px solid #ff4b2b;
 		background-color: #ff4b2b;

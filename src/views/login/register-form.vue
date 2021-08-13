@@ -1,8 +1,8 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:34:51
- * @LastEditTime: 2021-08-10 18:28:44
- * @Description: 
+ * @LastEditTime: 2021-08-13 14:12:54
+ * @Description:  注册表单
 -->
 <template>
 	<div class="register-content">
@@ -35,6 +35,16 @@
 					autocomplete="off"
 				></el-input>
 			</el-form-item>
+			<el-form-item label="验证码" prop="code" class="pass-code">
+				<el-input placeholder="验证码" v-model="registerForm.code"></el-input>
+				<el-button
+					type="text"
+					@click="onClickSendBtn"
+					:loading="sendBtn.loading"
+					:disabled="sendBtn.disabled"
+					>{{ sendBtn.text }}
+				</el-button>
+			</el-form-item>
 			<el-form-item label="密码" prop="password">
 				<el-input
 					type="password"
@@ -44,17 +54,15 @@
 					autocomplete="off"
 				></el-input>
 			</el-form-item>
-			<el-form-item label="确认密码" prop="confirm_password">
-				<el-input
-					type="password"
-					placeholder="确认密码"
-					v-model="registerForm.confirm_password"
-					show-password
-					autocomplete="off"
-				></el-input>
-			</el-form-item>
+
 			<el-form-item>
-				<el-button type="danger" round :loading="loading" @click="onSubmitForm">
+				<el-button
+					type="danger"
+					class="button"
+					round
+					:loading="loading"
+					@click="onSubmitForm"
+				>
 					注册
 				</el-button>
 			</el-form-item>
@@ -63,24 +71,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref, watch } from 'vue';
 import { UserApi } from '@/services';
-import { RegisterProps } from '@/types/service';
 import { ElMessage } from 'element-plus';
+import { emailRule, codeRule, passwordRule, nicknameRule } from '@/config/rule';
+import { useSendCode } from './forgot-pass.vue';
 
 export default defineComponent({
 	name: 'register-content',
 	components: {},
-	props: {},
+	props: {
+		active: {
+			type: Boolean,
+			default: false,
+		},
+	},
 	emits: ['switch-register'],
 	setup(props, context) {
 		const registerForm = reactive({
 			name: '',
 			email: '',
+			code: '',
 			password: '',
-			confirm_password: '',
 		});
-		const { registerRules } = useRules(registerForm);
+		const { registerRules } = useRules();
+		const setFormData = (data: {
+			name?: string;
+			email?: string;
+			code?: string;
+			password?: string;
+		}) => {
+			registerForm.name = data.name || '';
+			registerForm.email = data.email || '';
+			registerForm.code = data.code || '';
+			registerForm.password = data.password || '';
+		};
 
 		// 注册参数校验
 		const registerFormRef: any = ref(null);
@@ -91,6 +116,13 @@ export default defineComponent({
 				}
 			});
 		};
+
+		// 验证码逻辑
+		const { sendBtn, onClickSendBtn } = useSendCode(
+			registerFormRef,
+			registerForm,
+			'注册账号'
+		);
 
 		// 注册逻辑
 		const loading = ref(false);
@@ -104,55 +136,36 @@ export default defineComponent({
 				loading.value = false;
 			}
 		};
+
+		// 监听是否当前tab, 离开当前tab清空表单值
+		watch(
+			() => props.active,
+			(val: boolean) => {
+				if (!val) {
+					setFormData({});
+					registerFormRef.value.clearValidate();
+				}
+			}
+		);
+
 		return {
 			registerForm,
 			registerRules,
 			registerFormRef,
 			onSubmitForm,
 			loading,
+			sendBtn,
+			onClickSendBtn,
 		};
 	},
 });
 
-function useRules(registerForm: RegisterProps) {
-	const validateConfirmPass = (rule: any, value: any, callback: any) => {
-		if (value !== registerForm.password) {
-			callback(new Error('两次输入的密码不一致，请重新输入'));
-		} else {
-			callback();
-		}
-	};
-
+function useRules() {
 	const registerRules = {
-		name: [
-			{ required: true, message: '请输入昵称', trigger: 'blur' },
-			{
-				pattern: /^([a-zA-Z0-9_\u4e00-\u9fa5]{2,10})$/,
-				message: '昵称长度在2~10之间, 支持数字,字母,汉字,下划线',
-				trigger: 'blur',
-			},
-		],
-		email: [
-			{ required: true, message: '请输入邮箱', trigger: 'blur' },
-			{ min: 6, max: 30, message: '邮箱长度在6~30之间', trigger: 'blur' },
-			{
-				pattern: /(^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$)/,
-				message: '邮箱格式不正确',
-				trigger: 'blur',
-			},
-		],
-		password: [
-			{ required: true, message: '请输入密码', trigger: 'blur' },
-			{
-				pattern: /^[\w#@!~%^&*]{6,18}$/,
-				message: '密码长度在6~18之间，支持字母、数字,特殊字符',
-				trigger: 'blur',
-			},
-		],
-		confirm_password: [
-			{ required: true, message: '请输入确认密码', trigger: 'blur' },
-			{ validator: validateConfirmPass, trigger: 'blur' },
-		],
+		name: nicknameRule,
+		email: emailRule,
+		code: codeRule,
+		password: passwordRule,
 	};
 	return { registerRules };
 }
@@ -166,6 +179,20 @@ function useRules(registerForm: RegisterProps) {
 		margin-top: 8px;
 		.el-form-item__label {
 			display: none;
+		}
+		.pass-code .el-form-item__content {
+			display: flex;
+			justify-content: space-between;
+			.el-input {
+				width: calc(100% - 140px);
+			}
+			.el-button {
+				margin-left: 20px;
+				font-weight: normal;
+				span {
+					font-size: 14px;
+				}
+			}
 		}
 	}
 }
