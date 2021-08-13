@@ -17,7 +17,7 @@ export default (router: any) => {
 	// }
 
 	timer = setTimeout(() => {
-		store.dispatch('loginOut');
+		store.dispatch('logout');
 		const { origin } = window.location;
 		window.location.href = origin;
 	}, Config.stagnateTime);

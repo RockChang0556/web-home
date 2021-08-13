@@ -1,5 +1,13 @@
+<!--
+ * @Author: Rock Chang
+ * @Date: 2021-08-05 11:31:57
+ * @LastEditTime: 2021-08-12 20:21:45
+ * @Description: 
+-->
 <template>
-	<router-view></router-view>
+	<transition name="el-fade-in-linear">
+		<router-view></router-view>
+	</transition>
 </template>
 
 <script lang="ts">

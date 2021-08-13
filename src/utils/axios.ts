@@ -127,13 +127,13 @@ _axios.interceptors.response.use(
 			// refresh_token 异常，直接登出
 			if (refreshTokenException(code)) {
 				setTimeout(() => {
-					store.dispatch('loginOut');
+					store.dispatch('logout');
 					const { origin } = window.location;
 					window.location.href = origin;
 				}, 1500);
 				return resolve(res);
 			}
-			// assessToken相关，刷新令牌
+			// assess_token相关，刷新令牌
 			if (code === 10041 || code === 10051) {
 				const cache: any = {};
 				if (cache.url !== url) {

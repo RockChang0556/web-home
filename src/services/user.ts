@@ -1,3 +1,9 @@
+/*
+ * @Author: Rock Chang
+ * @Date: 2021-08-09 23:06:34
+ * @LastEditTime: 2021-08-12 21:51:05
+ * @Description:
+ */
 // @ts-ignore
 import _axios, { post, get, put } from '@/utils/axios';
 import store from '@/store';
@@ -47,23 +53,30 @@ export default class User {
 	 * 获取当前用户信息，并返回User实例
 	 */
 	static async getCurrentUser() {
-		const { data } = await get('/user/getCurrentUser');
+		const { data } = await get('/user/current');
 		const storeUser = store.getters.user === null ? {} : store.getters.user;
 		return Object.assign({ ...storeUser }, data);
 	}
 
-	/**
-	 * 用户修改密码
-	 * @param {string} newPassword 新密码
-	 * @param {string} confirmPassword 确认新密码
-	 * @param {string} oldPassword 旧密码
+	/** 发送验证码到邮箱
+	 * @param {object} params
+	 * 	email 收件人邮箱
+	 * 	reason 邮件目的 注册/修改密码/其他验证
+	 * @return {*}
 	 */
-	// eslint-disable-next-line camelcase
-	static updatePassword(params: {
-		old_password: string;
-		new_password: string;
-		confirm_password: string;
+	static async getEmailCode(params: { email: string; reason: string }) {
+		return post('/user/email/code', params);
+	}
+
+	/** 通过邮箱修改密码
+	 * @param {*} params
+	 * @return {*}
+	 */
+	static async updatePassword(params: {
+		email: string;
+		code: string;
+		password: string;
 	}) {
-		return put('cms/user/change_password', params);
+		return post('/user/update_password', params);
 	}
 }

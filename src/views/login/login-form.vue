@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-10 18:26:36
+ * @LastEditTime: 2021-08-12 21:40:15
  * @Description: 登录表单
 -->
 <template>
@@ -42,7 +42,7 @@
 						:style="{ float: 'left', width: '30px', height: '20px' }"
 						@click="toAdmin"
 					></span>
-					<a href="#" class="">忘记密码?</a>
+					<forgot-pass><a class="">忘记密码?</a></forgot-pass>
 				</div>
 				<el-button type="danger" round :loading="loading" @click="onSubmitForm">
 					登录
@@ -56,11 +56,12 @@
 import { defineComponent, reactive, ref } from 'vue';
 import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
+import ForgotPass from './forgot-pass.vue';
 import { getQueryString } from '@/utils/util';
 
 export default defineComponent({
 	name: 'login-content',
-	components: {},
+	components: { ForgotPass },
 	props: {},
 	setup() {
 		const loginForm = reactive({
@@ -122,7 +123,7 @@ function useRules() {
 
 	const loginRules = {
 		account: [
-			{ required: true, message: '请输入账号(手机/邮箱)', trigger: 'blur' },
+			{ required: true, message: '请输入账号', trigger: 'blur' },
 			{ min: 6, max: 30, message: '账号长度在6~30之间', trigger: 'blur' },
 			{ validator: validateAccount, trigger: 'blur' },
 		],
