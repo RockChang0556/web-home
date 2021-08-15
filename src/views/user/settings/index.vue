@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-13 21:52:17
- * @LastEditTime: 2021-08-14 20:06:03
+ * @LastEditTime: 2021-08-15 18:18:05
  * @Description: 用户个人信息设置
 -->
 <template>
@@ -11,14 +11,15 @@
 			:tab-position="isLargeScreen ? 'left' : 'top'"
 			class="user-settings-tabs"
 			v-if="currentUser.isFetched"
+			model-value="1"
 		>
-			<el-tab-pane>
+			<el-tab-pane name="1">
 				<template #label>
 					<span><i class="el-icon-s-custom"></i> 个人信息</span>
 				</template>
 				<profile :user="currentUser"></profile>
 			</el-tab-pane>
-			<el-tab-pane>
+			<el-tab-pane name="2">
 				<template #label>
 					<span><i class="el-icon-s-operation"></i> 账号设置</span>
 				</template>
@@ -60,14 +61,17 @@ export default defineComponent({
 		max-width: 1200px;
 		min-width: 480px;
 		margin: 20px auto;
+		&.el-tabs--left {
+			overflow: inherit;
+			& > div {
+				min-height: 500px;
+			}
+		}
 		.el-tabs__header,
 		.el-tabs__content {
 			padding: 20px;
 			background: #fff;
 			box-shadow: var(--el-box-shadow-light);
-		}
-		&.el-tabs--left > div {
-			min-height: 500px;
 		}
 		.el-tabs__header {
 			.el-tabs__item {

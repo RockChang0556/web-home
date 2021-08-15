@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:34:51
- * @LastEditTime: 2021-08-13 14:12:54
+ * @LastEditTime: 2021-08-15 18:03:27
  * @Description:  注册表单
 -->
 <template>
@@ -75,7 +75,7 @@ import { defineComponent, reactive, ref, watch } from 'vue';
 import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
 import { emailRule, codeRule, passwordRule, nicknameRule } from '@/config/rule';
-import { useSendCode } from './forgot-pass.vue';
+import { useSendCode } from '@/components/update-password.vue';
 
 export default defineComponent({
 	name: 'register-content',
@@ -181,14 +181,7 @@ function useRules() {
 			display: none;
 		}
 		.pass-code .el-form-item__content {
-			display: flex;
-			justify-content: space-between;
-			.el-input {
-				width: calc(100% - 140px);
-			}
 			.el-button {
-				margin-left: 20px;
-				font-weight: normal;
 				span {
 					font-size: 14px;
 				}

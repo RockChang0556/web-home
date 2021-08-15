@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-13 14:08:12
+ * @LastEditTime: 2021-08-15 16:57:17
  * @Description: 登录表单
 -->
 <template>
@@ -42,7 +42,7 @@
 						:style="{ float: 'left', width: '30px', height: '20px' }"
 						@click="setFormData({ account: 'peng0556@qq.com' })"
 					></span> -->
-					<forgot-pass><a class="">忘记密码?</a></forgot-pass>
+					<update-password><a class="">忘记密码?</a></update-password>
 				</div>
 				<el-button
 					type="danger"
@@ -62,13 +62,13 @@
 import { defineComponent, reactive, ref, watch } from 'vue';
 import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
-import ForgotPass from './forgot-pass.vue';
+import UpdatePassword from '@/components/update-password.vue';
 import { getQueryString } from '@/utils/util';
 import { passwordRule } from '@/config/rule';
 
 export default defineComponent({
 	name: 'login-content',
-	components: { ForgotPass },
+	components: { UpdatePassword },
 	props: {
 		active: {
 			type: Boolean,

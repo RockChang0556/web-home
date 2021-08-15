@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 15:11:25
- * @LastEditTime: 2021-08-15 10:44:16
+ * @LastEditTime: 2021-08-15 18:19:31
  * @Description:
  */
 import { UserApi } from '@/services';
@@ -11,6 +11,7 @@ import { removeToken } from '@/utils/token';
 export interface UserProps {
 	id?: number;
 	name?: string;
+	phone?: string;
 	admin?: '0' | '1' | '2' | '3' | '4' | '5';
 	email?: string;
 	avatar_url?: string;

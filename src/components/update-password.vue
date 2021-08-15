@@ -1,11 +1,11 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-12 20:26:57
- * @LastEditTime: 2021-08-13 13:42:33
- * @Description:  忘记密码
+ * @LastEditTime: 2021-08-15 18:06:29
+ * @Description:  重置密码
 -->
 <template>
-	<span class="forgot-pass-btn" @click="onChangeVisible(true)">
+	<span class="update-password-btn" @click="onChangeVisible(true)">
 		<slot>打开嵌套表格的 Dialog</slot>
 	</span>
 
@@ -13,7 +13,7 @@
 		title="邮箱重置密码"
 		v-model="visible"
 		append-to-body
-		custom-class="forgot-pass-dialog"
+		custom-class="update-password-dialog"
 		width="400px"
 		top="20vh"
 		:close-on-click-modal="false"
@@ -23,11 +23,15 @@
 			:model="forgotPassForm"
 			:rules="forgotPassRules"
 			ref="forgotPassFormRef"
-			class="forgot-pass-elform"
+			class="update-password-elform"
 			@submit.native.prevent
 		>
 			<el-form-item label="账号" prop="email">
-				<el-input placeholder="邮箱" v-model="forgotPassForm.email"></el-input>
+				<el-input
+					placeholder="邮箱"
+					v-model="forgotPassForm.email"
+					:disabled="!!email"
+				></el-input>
 			</el-form-item>
 			<el-form-item label="验证码" prop="code" class="pass-code">
 				<el-input placeholder="验证码" v-model="forgotPassForm.code"></el-input>
@@ -68,13 +72,18 @@ import { UserApi } from '@/services';
 import { emailRule, codeRule, passwordRule } from '@/config/rule';
 
 export default defineComponent({
-	name: 'defaults',
+	name: 'update-password-dialog',
 	components: {},
-	props: {},
-	setup() {
+	props: {
+		email: {
+			type: String,
+			default: '',
+		},
+	},
+	setup(props) {
 		const { visible, onChangeVisible } = useSwitchDialog();
 		const forgotPassForm = reactive({
-			email: '',
+			email: props.email ?? '',
 			code: '',
 			password: '',
 		});
@@ -140,7 +149,13 @@ function useRules() {
 	return { forgotPassRules };
 }
 
-// 发送验证码
+/** 发送验证码
+ * @param {*}
+ * formRef {ref} 校验邮箱用
+ * formData {object} email字段必填, 其他随意
+ * reason {string} 邮件目的
+ * @return {*}
+ */
 export function useSendCode(
 	formRef: any,
 	formData: { email: string; [key: string]: any },
@@ -186,31 +201,34 @@ export function useSendCode(
 </script>
 
 <style lang="less">
-.forgot-pass-btn {
+.update-password-btn {
 	cursor: pointer;
 }
-.forgot-pass-dialog {
-	.forgot-pass-elform {
+.update-password-dialog {
+	.update-password-elform {
 		.el-form-item__label {
 			display: none;
 		}
-		.pass-code .el-form-item__content {
-			display: flex;
-			justify-content: space-between;
-			.el-input {
-				width: calc(100% - 140px);
-			}
-			.el-button {
-				margin-left: 20px;
-				font-weight: normal;
-			}
-		}
+
 		.submit-btns {
 			margin-bottom: 0;
 			padding-top: 10px;
 			.el-form-item__content {
 				text-align: center;
 			}
+		}
+	}
+}
+.el-form {
+	.pass-code .el-form-item__content {
+		display: flex;
+		justify-content: space-between;
+		.el-input {
+			width: calc(100% - 140px);
+		}
+		.el-button {
+			margin-left: 20px;
+			font-weight: normal;
 		}
 	}
 }
