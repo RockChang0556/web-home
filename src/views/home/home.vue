@@ -1,6 +1,6 @@
 <template>
-	<div class="home" v-loading.fullscreen.lock="loading">
-		<global-header v-if="!loading" :user="currentUser"></global-header>
+	<div class="home">
+		<global-header :user="currentUser"></global-header>
 		<header>
 			<h1>Welcome to my world</h1>
 			<p>这里是我的个人站, 不一定有什么内容</p>
@@ -41,7 +41,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
-import { getToken } from '@/utils/token';
 import GlobalHeader from '@/components/layout/header.vue';
 export default defineComponent({
 	name: 'home',
@@ -50,24 +49,9 @@ export default defineComponent({
 	setup() {
 		const store = useStore();
 		const currentUser = computed(() => store.state.user.userInfo);
-		const loading = ref(false);
-
-		// 获取用户信息
-		const getCurrentUser = async () => {
-			const access_token = getToken('access_token');
-			if (!access_token) return;
-			try {
-				loading.value = true;
-				await store.dispatch('user/getUserInfo');
-			} finally {
-				loading.value = false;
-			}
-		};
-		getCurrentUser();
 
 		return {
 			currentUser,
-			loading,
 		};
 	},
 });
@@ -80,7 +64,7 @@ export default defineComponent({
 	padding: 0;
 }
 .home {
-	width: 100vw;
+	width: 100%;
 	height: 200vh;
 	padding: 1rem;
 	font-family: Avenir, sans-serif;
@@ -95,6 +79,7 @@ export default defineComponent({
 		-10vw calc(14rem + 20vw), 30vw calc(14rem + 20vw);
 	background-size: 80vw 80vw;
 	background-repeat: no-repeat;
+	background-color: #fff;
 
 	header {
 		max-width: 600px;

@@ -1,5 +1,11 @@
+<!--
+ * @Author: Rock Chang
+ * @Date: 2021-08-05 14:50:24
+ * @LastEditTime: 2021-08-14 19:59:23
+ * @Description: 布局组件 - 头部
+-->
 <template>
-	<div class="global-header">
+	<div class="global-header" v-if="user.isFetched">
 		<router-link class="header-logo" to="/">
 			<img src="/logo.png" alt="logo" />
 		</router-link>
@@ -8,13 +14,25 @@
 				<el-button type="danger" plain>登录</el-button>
 			</router-link>
 		</div>
-		<el-dropdown v-else>
+		<el-dropdown v-else trigger="click">
 			<span class="el-dropdown-link">
-				{{ user.name }}<i class="el-icon-arrow-down el-icon--right"></i>
+				<el-avatar :size="36" :src="user.avatar_url">
+					<img :src="avatarDefaultUrl" />
+				</el-avatar>
+				{{ user.name }}
+				<i class="el-icon-arrow-down el-icon--right"></i>
 			</span>
 			<template #dropdown>
-				<el-dropdown-menu>
-					<el-dropdown-item @click.prevent="logout">退出登录</el-dropdown-item>
+				<el-dropdown-menu class="header-user-dropdown">
+					<router-link to="/user/settings">
+						<el-dropdown-item icon="el-icon-setting"> 设置 </el-dropdown-item>
+					</router-link>
+					<el-dropdown-item
+						icon="el-icon-switch-button"
+						@click.prevent="logout"
+					>
+						退出登录
+					</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -25,6 +43,7 @@
 import { defineComponent, PropType } from 'vue';
 import { useStore } from 'vuex';
 import { UserProps } from '@/store/modules/user';
+import { avatarDefaultUrl } from '@/config/constants';
 export default defineComponent({
 	name: 'global-header',
 	components: {},
@@ -41,6 +60,7 @@ export default defineComponent({
 		};
 		return {
 			logout,
+			avatarDefaultUrl,
 		};
 	},
 });
@@ -76,6 +96,26 @@ export default defineComponent({
 		.el-dropdown-link {
 			float: right;
 			cursor: pointer;
+			display: flex;
+			align-items: flex-end;
+			line-height: 26px;
+			.el-icon-arrow-down {
+				line-height: inherit;
+			}
+			.el-avatar {
+				margin-right: 5px;
+			}
+		}
+	}
+}
+
+// element
+.header-user-dropdown {
+	a {
+		color: var(--el-text-color-regular);
+		&:hover {
+			background-color: var(--el-dropdown-menuItem-hover-fill);
+			color: var(--el-dropdown-menuItem-hover-color);
 		}
 	}
 }

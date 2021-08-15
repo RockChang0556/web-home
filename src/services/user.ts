@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-09 23:06:34
- * @LastEditTime: 2021-08-12 21:51:05
+ * @LastEditTime: 2021-08-15 15:41:00
  * @Description:
  */
 // @ts-ignore
@@ -78,5 +78,13 @@ export default class User {
 		password: string;
 	}) {
 		return post('/user/update_password', params);
+	}
+
+	/** 更新用户信息
+	 * @param {*} params
+	 * @return {*}
+	 */
+	static async update(params: { [key: string]: any }) {
+		return post('/user/update', params);
 	}
 }

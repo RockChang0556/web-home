@@ -1,11 +1,16 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-08 15:00:23
- * @LastEditTime: 2021-08-12 20:50:29
+ * @LastEditTime: 2021-08-14 16:38:10
  * @Description:
  */
 // element 按需引入
 import {
+	ElRadio,
+	ElRadioGroup,
+	ElTabs,
+	ElTabPane,
+	ElAvatar,
 	ElButton,
 	ElInput,
 	ElForm,
@@ -20,6 +25,11 @@ import {
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 const components = [
+	ElRadio,
+	ElRadioGroup,
+	ElTabs,
+	ElTabPane,
+	ElAvatar,
 	ElButton,
 	ElInput,
 	ElForm,

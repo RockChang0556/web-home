@@ -38,6 +38,11 @@ function refreshTokenException(code: number) {
 	return codes.includes(code);
 }
 
+function accessTokenException(code: number) {
+	const codes = [4001, 4002, 4004, 4005, 4006, 4010, 4011];
+	return codes.includes(code);
+}
+
 // 创建请求实例
 const _axios = axios.create(config);
 
@@ -118,7 +123,7 @@ _axios.interceptors.response.use(
 		const { code, message } = res.data;
 
 		return new Promise(async (resolve, reject) => {
-			let tipMessage: any = '';
+			let tipMessage: any = '网络异常';
 			const { url, handleError, showBackend } = res.config as any;
 			if (code === 0) {
 				return resolve(res);
@@ -127,7 +132,16 @@ _axios.interceptors.response.use(
 			// refresh_token 异常，直接登出
 			if (refreshTokenException(code)) {
 				setTimeout(() => {
-					store.dispatch('logout');
+					store.dispatch('user/logout');
+					const { origin } = window.location;
+					window.location.href = origin;
+				}, 1500);
+				return resolve(res);
+			}
+			// assess_token异常, 直接登出
+			if (accessTokenException(code)) {
+				setTimeout(() => {
+					store.dispatch('user/logout');
 					const { origin } = window.location;
 					window.location.href = origin;
 				}, 1500);
@@ -193,6 +207,7 @@ _axios.interceptors.response.use(
 			ElMessage.error('请检查 API 是否异常');
 			return Promise.reject(error);
 		}
+		ElMessage.error('网络异常');
 		return Promise.reject(error);
 	}
 );
