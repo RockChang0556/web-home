@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-16 09:47:21
- * @LastEditTime: 2021-08-16 14:21:29
+ * @LastEditTime: 2021-08-16 14:37:33
  * @Description: 发送验证码
  */
 import { UserApi } from '@/services';
@@ -13,6 +13,7 @@ import { reactive } from 'vue';
  * formRef {ref} 校验邮箱用
  * formData {object} email字段必填, 其他随意
  * reason {string} 邮件目的
+ * beforeSend {function} 发送邮件前置函数, 返回true继续执行, 返回false不发送邮件
  * @return {*}
  */
 export function useSendCode(
@@ -31,7 +32,6 @@ export function useSendCode(
 		if (beforeSend instanceof Function && !(await beforeSend())) {
 			return;
 		}
-		console.log('', 2);
 		formRef.value.validateField('email', async (errMsg: string) => {
 			if (!errMsg) {
 				try {

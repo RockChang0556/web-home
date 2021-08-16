@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-12 20:26:57
- * @LastEditTime: 2021-08-16 14:26:20
+ * @LastEditTime: 2021-08-16 16:04:53
  * @Description:  重置密码
 -->
 <template>
@@ -17,7 +17,7 @@
 		width="400px"
 		top="20vh"
 		:close-on-click-modal="false"
-		destroy-on-close
+		@close="resetForm"
 	>
 		<el-form
 			:model="forgotPassForm"
@@ -82,6 +82,7 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
+		const forgotPassFormRef: any = ref(null);
 		const { visible, onChangeVisible } = useSwitchDialog();
 		const forgotPassForm = reactive({
 			email: props.email ?? '',
@@ -92,7 +93,6 @@ export default defineComponent({
 
 		// 表单参数校验
 		const submitBtnLoading = ref(false);
-		const forgotPassFormRef: any = ref(null);
 		const onSubmitForm = () => {
 			forgotPassFormRef.value.validate(async (valid: boolean) => {
 				if (valid) {
@@ -130,6 +130,11 @@ export default defineComponent({
 			'修改密码',
 			validatorEamil
 		);
+
+		// 重置表单
+		const resetForm = () => {
+			forgotPassFormRef.value.resetFields();
+		};
 		return {
 			visible,
 			onChangeVisible,
@@ -140,6 +145,7 @@ export default defineComponent({
 			onSubmitForm,
 			onClickSendBtn,
 			sendBtn,
+			resetForm,
 		};
 	},
 });
@@ -147,8 +153,8 @@ export default defineComponent({
 // 打开/关闭弹框
 function useSwitchDialog() {
 	const visible = ref(false);
-	const onChangeVisible = (isLogin: boolean) => {
-		visible.value = isLogin;
+	const onChangeVisible = (val: boolean) => {
+		visible.value = val;
 	};
 	return {
 		visible,

@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-05 14:50:24
- * @LastEditTime: 2021-08-14 19:59:23
+ * @LastEditTime: 2021-08-16 16:05:29
  * @Description: 布局组件 - 头部
 -->
 <template>
@@ -72,6 +72,7 @@ export default defineComponent({
 	top: 0;
 	right: 0;
 	left: 0;
+	z-index: 9999;
 	height: 70px;
 	line-height: 70px;
 	padding: 8px 2rem;
