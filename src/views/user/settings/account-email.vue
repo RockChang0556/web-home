@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-15 17:36:23
- * @LastEditTime: 2021-08-15 18:13:53
+ * @LastEditTime: 2021-08-16 09:57:07
  * @Description: 设置 - 账号设置 - 更换邮箱
 -->
 <template>
@@ -45,7 +45,8 @@ import { emailRule, codeRule } from '@/config/rule';
 import { UserProps } from '@/store/modules/user';
 import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
-import { useSendCode } from '@/components/update-password.vue';
+import { useSendCode } from '@/hooks/useSendCode';
+
 export default defineComponent({
 	name: 'account-phone',
 	components: {},

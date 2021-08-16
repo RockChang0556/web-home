@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 15:11:25
- * @LastEditTime: 2021-08-15 18:19:31
+ * @LastEditTime: 2021-08-16 09:25:36
  * @Description:
  */
 import { UserApi } from '@/services';
@@ -38,7 +38,7 @@ const getters = {};
 // actions
 const actions = {
 	logout({ commit }: any) {
-		commit('setUserInfo', { isFetched: false });
+		commit('setUserInfo', { isFetched: true });
 		removeToken();
 		router.push('/');
 	},

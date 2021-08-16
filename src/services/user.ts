@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-09 23:06:34
- * @LastEditTime: 2021-08-15 15:41:00
+ * @LastEditTime: 2021-08-16 14:29:20
  * @Description:
  */
 // @ts-ignore
@@ -45,8 +45,7 @@ export default class User {
 	 * @param {object} params
 	 */
 	static async register(params: RegisterProps) {
-		const { data } = await post('/user/register', params);
-		return data;
+		return post('/user/register', params);
 	}
 
 	/**
@@ -56,6 +55,16 @@ export default class User {
 		const { data } = await get('/user/current');
 		const storeUser = store.getters.user === null ? {} : store.getters.user;
 		return Object.assign({ ...storeUser }, data);
+	}
+
+	// 查询用户是否注册
+	static async getIsRegister(params: {
+		id?: string;
+		email?: string;
+		phone?: string;
+	}) {
+		const { data } = await get('/user/has_user', params);
+		return data.data || {};
 	}
 
 	/** 发送验证码到邮箱

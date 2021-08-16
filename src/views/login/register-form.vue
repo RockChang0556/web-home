@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:34:51
- * @LastEditTime: 2021-08-15 18:03:27
+ * @LastEditTime: 2021-08-16 09:57:00
  * @Description:  注册表单
 -->
 <template>
@@ -75,7 +75,7 @@ import { defineComponent, reactive, ref, watch } from 'vue';
 import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
 import { emailRule, codeRule, passwordRule, nicknameRule } from '@/config/rule';
-import { useSendCode } from '@/components/update-password.vue';
+import { useSendCode } from '@/hooks/useSendCode';
 
 export default defineComponent({
 	name: 'register-content',

@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-12 20:26:57
- * @LastEditTime: 2021-08-15 18:06:29
+ * @LastEditTime: 2021-08-16 14:26:20
  * @Description:  重置密码
 -->
 <template>
@@ -70,6 +70,7 @@ import { defineComponent, reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { UserApi } from '@/services';
 import { emailRule, codeRule, passwordRule } from '@/config/rule';
+import { useSendCode } from '@/hooks/useSendCode';
 
 export default defineComponent({
 	name: 'update-password-dialog',
@@ -108,11 +109,26 @@ export default defineComponent({
 			});
 		};
 
+		// 发送验证码前置校验, 返回true继续执行
+		const validatorEamil = async () => {
+			if (props.email) return true; // 设置页修改密码
+			const { has_user } = await UserApi.getIsRegister({
+				email: forgotPassForm.email,
+			});
+			if (has_user) {
+				return true;
+			} else {
+				ElMessage.error('该账号尚未注册!');
+				return false;
+			}
+		};
+
 		// 发送验证码
 		const { sendBtn, onClickSendBtn } = useSendCode(
 			forgotPassFormRef,
 			forgotPassForm,
-			'修改密码'
+			'修改密码',
+			validatorEamil
 		);
 		return {
 			visible,
@@ -147,56 +163,6 @@ function useRules() {
 		password: passwordRule,
 	};
 	return { forgotPassRules };
-}
-
-/** 发送验证码
- * @param {*}
- * formRef {ref} 校验邮箱用
- * formData {object} email字段必填, 其他随意
- * reason {string} 邮件目的
- * @return {*}
- */
-export function useSendCode(
-	formRef: any,
-	formData: { email: string; [key: string]: any },
-	reason: string
-) {
-	const sendBtn = reactive({
-		loading: false,
-		text: '点击发送验证码',
-		time: 60,
-		disabled: false,
-	});
-	const onClickSendBtn = () => {
-		formRef.value.validateField('email', async (errMsg: string) => {
-			if (!errMsg) {
-				try {
-					sendBtn.loading = true;
-					await UserApi.getEmailCode({
-						email: formData.email,
-						reason,
-					});
-					ElMessage.success('验证码成功发送至您的邮箱, 请注意查收');
-					// 按钮倒计时
-					const countDown = setInterval(() => {
-						if (sendBtn.time < 1) {
-							sendBtn.text = '点击发送验证码';
-							sendBtn.time = 60;
-							sendBtn.disabled = false;
-							clearInterval(countDown);
-						} else {
-							sendBtn.disabled = true;
-							sendBtn.text = `${sendBtn.time--}s后重新发送`;
-						}
-					}, 1000);
-				} catch (error) {
-				} finally {
-					sendBtn.loading = false;
-				}
-			}
-		});
-	};
-	return { sendBtn, onClickSendBtn };
 }
 </script>
 
