@@ -1,7 +1,13 @@
+/*
+ * @Author: Rock Chang
+ * @Date: 2021-08-05 11:31:57
+ * @LastEditTime: 2021-08-19 18:47:09
+ * @Description:
+ */
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
-import styleImport from 'vite-plugin-style-import';
+// import styleImport from 'vite-plugin-style-import';
 
 // https://vitejs.dev/config/
 export default defineConfig({

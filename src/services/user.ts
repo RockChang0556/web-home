@@ -1,8 +1,8 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-09 23:06:34
- * @LastEditTime: 2021-08-16 14:29:20
- * @Description:
+ * @LastEditTime: 2021-08-19 01:27:48
+ * @Description: 用户相关接口
  */
 // @ts-ignore
 import _axios, { post, get, put } from '@/utils/axios';

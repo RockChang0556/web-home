@@ -1,3 +1,9 @@
+/*
+ * @Author: Rock Chang
+ * @Date: 2021-08-09 19:25:59
+ * @LastEditTime: 2021-08-19 18:46:21
+ * @Description:
+ */
 const config = {
 	sidebarLevel: 3, // 侧边栏层级（无限级）限制, 默认为 3 级，可根据需求自行扩充
 	openAutoJumpOut: true, // 是否开启无操作跳出
