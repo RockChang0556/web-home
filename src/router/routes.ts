@@ -1,15 +1,17 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-19 02:59:50
- * @LastEditTime: 2021-08-20 17:42:19
+ * @LastEditTime: 2021-08-21 17:57:48
  * @Description: 整合所有路由
  */
 
 import { RouteRecordRaw } from 'vue-router';
 import { formatRoutes } from '@/utils/route';
-import { adminRouteConf } from './admin';
+import { adminRouteConf } from './route-admin';
+import { userRouteConf } from './route-user';
 
 const adminRoutes = formatRoutes(adminRouteConf);
+const userRoutes = formatRoutes(userRouteConf);
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -21,6 +23,9 @@ const routes: Array<RouteRecordRaw> = [
 		path: '/admin',
 		name: 'admin',
 		component: () => import('@/views/admin/index.vue'),
+		meta: {
+			admin: 1,
+		},
 		children: [...adminRoutes],
 	},
 	{
@@ -29,9 +34,13 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/views/login/index.vue'),
 	},
 	{
-		path: '/user/settings',
-		name: 'user-settings',
-		component: () => import('@/views/user/settings/index.vue'),
+		path: '/user',
+		name: 'user',
+		component: () => import('@/views/user/index.vue'),
+		meta: {
+			admin: 0,
+		},
+		children: [...userRoutes],
 	},
 ];
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-20 18:01:56
- * @LastEditTime: 2021-08-21 11:42:08
+ * @LastEditTime: 2021-08-21 17:46:58
  * @Description: 头像组件
 -->
 
@@ -13,6 +13,7 @@
 		<el-upload
 			v-else
 			v-loading="uploading"
+			action="#"
 			element-loading-background="rgba(0, 0, 0, 0.3)"
 			class="avatar-uploader"
 			:show-file-list="false"
@@ -104,7 +105,6 @@ export default defineComponent({
 		);
 		// 上传前验证
 		const beforeAvatarUpload = (file: any) => {
-			console.log('file', file);
 			// 验证文件大小
 			const isBigger = file.size > 1024 * 1024 * 1;
 			if (isBigger) {
@@ -155,7 +155,6 @@ export default defineComponent({
 			const blob: Blob = cropper.getBlob();
 			// 构造为文件对象
 			const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
-			console.log('file2', file);
 			const formdata = new FormData();
 			formdata.append('file', file);
 			try {

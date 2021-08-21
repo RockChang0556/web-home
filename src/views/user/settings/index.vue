@@ -1,12 +1,11 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-13 21:52:17
- * @LastEditTime: 2021-08-15 18:18:05
+ * @LastEditTime: 2021-08-21 17:27:35
  * @Description: 用户个人信息设置
 -->
 <template>
 	<div class="user-settings">
-		<global-header :user="currentUser"></global-header>
 		<el-tabs
 			:tab-position="isLargeScreen ? 'left' : 'top'"
 			class="user-settings-tabs"
@@ -32,7 +31,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
-import GlobalHeader from '@/components/layout/header.vue';
 import Profile from './profile.vue';
 import Account from './account.vue';
 import { useMediaQuery } from '@vueuse/core';
@@ -40,7 +38,6 @@ import { useMediaQuery } from '@vueuse/core';
 export default defineComponent({
 	name: 'user-settings',
 	components: {
-		GlobalHeader,
 		Profile,
 		Account,
 	},

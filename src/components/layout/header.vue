@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-05 14:50:24
- * @LastEditTime: 2021-08-20 18:10:31
+ * @LastEditTime: 2021-08-21 18:00:42
  * @Description: 布局组件 - 头部
 -->
 <template>
@@ -24,6 +24,11 @@
 				<el-dropdown-menu class="header-user-dropdown">
 					<router-link to="/user/settings">
 						<el-dropdown-item icon="el-icon-setting"> 设置 </el-dropdown-item>
+					</router-link>
+					<router-link to="/admin/dashboard">
+						<el-dropdown-item icon="el-icon-setting">
+							管理员空间
+						</el-dropdown-item>
 					</router-link>
 					<el-dropdown-item
 						icon="el-icon-switch-button"

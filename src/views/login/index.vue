@@ -1,5 +1,5 @@
 <template>
-	<div class="global-login">
+	<div class="login-wrap">
 		<div class="container" :class="{ 'register-active': isRegisterActive }">
 			<div class="form-container sign-up-container">
 				<div class="form-container-cont">
@@ -43,7 +43,7 @@ import { defineComponent, ref } from 'vue';
 import LoginForm from './login-form.vue';
 import RegisterForm from './register-form.vue';
 export default defineComponent({
-	name: 'global-login',
+	name: 'login-wrap',
 	components: {
 		LoginForm,
 		RegisterForm,
@@ -74,7 +74,7 @@ function useLoginOrRegister() {
 
 <style lang="less">
 // @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-.global-login {
+.login-wrap {
 	width: 100vw;
 	background: #f6f5f7;
 	display: flex;

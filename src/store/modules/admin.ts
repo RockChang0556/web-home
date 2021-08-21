@@ -1,10 +1,10 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 15:11:25
- * @LastEditTime: 2021-08-19 18:45:53
+ * @LastEditTime: 2021-08-21 18:11:48
  * @Description:
  */
-import { adminRouteConf } from '@/router/admin';
+import { adminRouteConf } from '@/router/route-admin';
 import userStore, { UserProps } from './user';
 import config from '@/config/index';
 
@@ -13,21 +13,22 @@ const state = {};
 
 // getters
 const getters = {
-	routeMap() {
-		// 筛选掉权限不够的配置
-		const shookConfig = permissionShaking(
-			adminRouteConf,
-			userStore.state.userInfo
+	permissionStageConfig() {
+		const userInfo = JSON.parse(
+			(sessionStorage.getItem('userInfo') as string) || '{}'
 		);
+		// 筛选掉权限不够的配置
+		const shookConfig = permissionShaking(adminRouteConf, userInfo);
 		// 拉平配置
-		const list: any = {};
-		deepTravel(shookConfig, (item: any) => {
-			list[item.routeName] = item;
-		});
-		return list;
+		// const list: any = {};
+		// deepTravel(shookConfig, (item: any) => {
+		// 	list[item.routeName] = item;
+		// });
+		return shookConfig;
 	},
-	sideList() {
-		const sideBar = deepGetSidebar(adminRouteConf, config.sidebarLevel);
+	sideList(state: any, getters: any) {
+		const { permissionStageConfig } = getters;
+		const sideBar = deepGetSidebar(permissionStageConfig, config.sidebarLevel);
 		return sideBar;
 	},
 };

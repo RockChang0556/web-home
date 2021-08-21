@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-19 02:35:15
- * @LastEditTime: 2021-08-19 18:50:05
+ * @LastEditTime: 2021-08-21 18:11:27
  * @Description: 管理员相关路由配置文件
  */
 
@@ -9,9 +9,9 @@ export const adminRouteConf = [
 	{
 		title: '数据分析',
 		type: 'view', // 菜单类别 folder-文件夹 view-菜单项
-		routeName: 'admin-portal',
-		routePath: '/admin/portal',
-		filePath: 'views/admin/portal/index.vue',
+		routeName: 'admin-dashboard',
+		routePath: '/admin/dashboard',
+		filePath: 'views/admin/dashboard/index.vue',
 		admin: 1,
 		icon: 'iconfont icon-tushuguanli',
 	},
