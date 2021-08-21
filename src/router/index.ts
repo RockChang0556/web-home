@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:34:59
- * @LastEditTime: 2021-08-21 18:18:25
+ * @LastEditTime: 2021-08-21 18:31:57
  * @Description: 路由
  */
 import { createRouter, createWebHistory } from 'vue-router';
@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
 	const hasToken = localStorage.getItem('access_token');
 	// 登录验证
 	if (isLoginRequired(to.meta) && !hasToken) {
-		next({ path: '/login' });
+		next({ name: 'login' });
 		return;
 	}
 	// 权限验证
@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
 	const pageAdmin: number = (to.meta.admin as number) ?? -1;
 	if (pageAdmin > userAdmin) {
 		ElMessage.error('您无此页面的权限哟');
-		// next({ path: '/about' });
+		next({ name: '403' });
 		return;
 	}
 

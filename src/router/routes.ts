@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-19 02:59:50
- * @LastEditTime: 2021-08-21 17:57:48
+ * @LastEditTime: 2021-08-21 19:10:57
  * @Description: 整合所有路由
  */
 
@@ -41,6 +41,27 @@ const routes: Array<RouteRecordRaw> = [
 			admin: 0,
 		},
 		children: [...userRoutes],
+	},
+	{
+		path: '/err',
+		name: 'err',
+		component: () => import('@/components/errpage/index.vue'),
+		children: [
+			{
+				path: '403',
+				name: '403',
+				component: () => import('@/components/errpage/403.vue'),
+			},
+			{
+				path: '404',
+				name: '404',
+				component: () => import('@/components/errpage/404.vue'),
+			},
+		],
+	},
+	{
+		path: '/:pathMatch(.*)',
+		redirect: '/err/404',
 	},
 ];
 

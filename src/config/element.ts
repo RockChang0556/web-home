@@ -1,11 +1,12 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-08 15:00:23
- * @LastEditTime: 2021-08-19 18:33:58
+ * @LastEditTime: 2021-08-21 18:29:11
  * @Description:
  */
 // element 按需引入
 import {
+	ElEmpty,
 	ElMenu,
 	ElSubmenu,
 	ElMenuItem,
@@ -29,6 +30,7 @@ import {
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 const components = [
+	ElEmpty,
 	ElMenu,
 	ElSubmenu,
 	ElMenuItem,
