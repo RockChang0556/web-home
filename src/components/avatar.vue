@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-20 18:01:56
- * @LastEditTime: 2021-08-21 11:35:51
+ * @LastEditTime: 2021-08-21 11:42:08
  * @Description: 头像组件
 -->
 
@@ -198,6 +198,9 @@ export default defineComponent({
 .com-avatar {
 	display: flex;
 	border-radius: 50%;
+	.el-avatar {
+		background: none;
+	}
 	.el-upload {
 		box-shadow: var(--el-box-shadow-light);
 		display: flex;

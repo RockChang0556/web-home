@@ -8,7 +8,7 @@ import Config from '@/config';
 import router from '@/router';
 import autoJump from '@/utils/auto-jump';
 import ErrorCode from '@/config/error-code';
-import { getToken, saveAccessToken } from '@/utils/token';
+import { getToken, saveTokens } from '@/utils/token';
 
 export interface CustomData<T> {
 	code: number;
@@ -34,12 +34,12 @@ const config = {
  * @param { number } code 错误码
  */
 function refreshTokenException(code: number) {
-	const codes = [10000, 10042, 10050, 10052];
+	const codes = [4001, 4002, 4004, 4005, 4006, 4020, 4021];
 	return codes.includes(code);
 }
 
 function accessTokenException(code: number) {
-	const codes = [4001, 4002, 4004, 4005, 4006, 4010, 4011];
+	const codes = [4010, 4011];
 	return codes.includes(code);
 }
 
@@ -138,22 +138,17 @@ _axios.interceptors.response.use(
 				}, 1500);
 				return resolve(res);
 			}
-			// assess_token异常, 直接登出
-			if (accessTokenException(code)) {
-				setTimeout(() => {
-					store.dispatch('user/logout');
-					const { origin } = window.location;
-					window.location.href = origin;
-				}, 1500);
-				return resolve(res);
-			}
 			// assess_token相关，刷新令牌
-			if (code === 10041 || code === 10051) {
+			if (accessTokenException(code)) {
 				const cache: any = {};
 				if (cache.url !== url) {
 					cache.url = url;
-					const { data: refreshResult } = await _axios('/user/refresh');
-					saveAccessToken(refreshResult.access_token);
+					const {
+						data: {
+							data: { access_token, refresh_token },
+						},
+					} = await _axios('/user/refresh');
+					saveTokens(access_token, refresh_token);
 					// 将上次失败请求重发
 					const result = await _axios(res.config);
 					return resolve(result);
