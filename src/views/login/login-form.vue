@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-15 16:57:17
+ * @LastEditTime: 2021-08-20 17:30:17
  * @Description: 登录表单
 -->
 <template>
@@ -24,7 +24,6 @@
 				<el-input
 					placeholder="手机/邮箱"
 					v-model="loginForm.account"
-					autocomplete="off"
 				></el-input>
 			</el-form-item>
 			<el-form-item label="密码" prop="password">
@@ -33,7 +32,7 @@
 					placeholder="密码"
 					v-model="loginForm.password"
 					show-password
-					autocomplete="off"
+					@keyup.enter="onSubmitForm"
 				></el-input>
 			</el-form-item>
 			<el-form-item>

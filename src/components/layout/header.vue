@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-05 14:50:24
- * @LastEditTime: 2021-08-16 16:05:29
+ * @LastEditTime: 2021-08-20 18:10:31
  * @Description: 布局组件 - 头部
 -->
 <template>
@@ -16,9 +16,7 @@
 		</div>
 		<el-dropdown v-else trigger="click">
 			<span class="el-dropdown-link">
-				<el-avatar :size="36" :src="user.avatar_url">
-					<img :src="avatarDefaultUrl" />
-				</el-avatar>
+				<avatar :size="36" :src="user.avatar_url"> </avatar>
 				{{ user.name }}
 				<i class="el-icon-arrow-down el-icon--right"></i>
 			</span>
@@ -43,10 +41,10 @@
 import { defineComponent, PropType } from 'vue';
 import { useStore } from 'vuex';
 import { UserProps } from '@/store/modules/user';
-import { avatarDefaultUrl } from '@/config/constants';
+import Avatar from '@/components/avatar.vue';
 export default defineComponent({
 	name: 'global-header',
-	components: {},
+	components: { Avatar },
 	props: {
 		user: {
 			type: Object as PropType<UserProps>,
@@ -60,7 +58,6 @@ export default defineComponent({
 		};
 		return {
 			logout,
-			avatarDefaultUrl,
 		};
 	},
 });
@@ -72,7 +69,7 @@ export default defineComponent({
 	top: 0;
 	right: 0;
 	left: 0;
-	z-index: 9999;
+	z-index: 1999;
 	height: 70px;
 	line-height: 70px;
 	padding: 8px 2rem;

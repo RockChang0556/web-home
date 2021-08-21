@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-09 23:06:34
- * @LastEditTime: 2021-08-19 01:27:48
+ * @LastEditTime: 2021-08-21 10:46:06
  * @Description: 用户相关接口
  */
 // @ts-ignore
@@ -95,5 +95,19 @@ export default class User {
 	 */
 	static async update(params: { [key: string]: any }) {
 		return post('/user/update', params);
+	}
+
+	/** 上传用户头像
+	 * @param {*} params
+	 * @return {*}
+	 */
+	static async uplaodAvatar(params: any) {
+		const { data } = await _axios({
+			method: 'post',
+			url: '/file/upload',
+			data: params,
+			headers: { 'Content-Type': 'multipart/form-data' },
+		});
+		return data;
 	}
 }

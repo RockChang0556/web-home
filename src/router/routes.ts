@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-19 02:59:50
- * @LastEditTime: 2021-08-19 18:50:19
+ * @LastEditTime: 2021-08-20 17:42:19
  * @Description: 整合所有路由
  */
 
@@ -35,5 +35,4 @@ const routes: Array<RouteRecordRaw> = [
 	},
 ];
 
-console.log('', routes);
 export default routes;

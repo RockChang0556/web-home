@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-13 22:38:06
- * @LastEditTime: 2021-08-18 09:14:43
+ * @LastEditTime: 2021-08-21 11:13:19
  * @Description: 用户 - 设置 - 个人资料
 -->
 <template>
@@ -61,16 +61,7 @@
 				</el-form-item>
 			</el-form>
 			<div class="settings-avatar">
-				<el-upload class="upload-demo" drag action="/api/file/upload" multiple>
-					<i class="el-icon-upload"></i>
-					<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-					<template #tip>
-						<div class="el-upload__tip">
-							只能上传 jpg/png 文件，且不超过 500kb
-						</div>
-					</template>
-				</el-upload>
-				<!-- <el-avatar :size="100"> 头像 </el-avatar> -->
+				<avatar edit :size="100" :src="user.avatar_url"></avatar>
 			</div>
 		</div>
 	</div>
@@ -83,10 +74,11 @@ import store from '@/store';
 import { UserProps } from '@/store/modules/user';
 import { UserApi } from '@/services';
 import { nicknameRule } from '@/config/rule';
+import Avatar from '@/components/avatar.vue';
 
 export default defineComponent({
 	name: 'user-settings-profile',
-	components: {},
+	components: { Avatar },
 	props: {
 		user: {
 			type: Object as PropType<UserProps>,
@@ -128,6 +120,7 @@ export default defineComponent({
 				}
 			});
 		};
+
 		return {
 			formData,
 			formRules,
