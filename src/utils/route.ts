@@ -1,10 +1,11 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-19 14:22:35
- * @LastEditTime: 2021-08-19 18:42:57
+ * @LastEditTime: 2021-08-22 14:54:36
  * @Description: 根据配置文件生成路由
  */
-
+// 引入所有views下.vue文件
+const modules = import.meta.glob('../views/**/**.vue');
 /**
  * 深度遍历配置树, 摘取叶子节点作为路由部分
  * @param {*} config 配置项
@@ -37,7 +38,9 @@ export function formatRoutes(configs: any) {
 		const viewRouter: any = {};
 		viewRouter.path = viewConfig.routePath;
 		viewRouter.name = viewConfig.routeName;
-		viewRouter.component = () => import(`../${viewConfig.filePath}`);
+		// webpack写法, 开发模式OK, 生产模式GG
+		// viewRouter.component = () => import(`../${viewConfig.filePath}`);
+		viewRouter.component = modules[`../${viewConfig.filePath}`];
 		viewRouter.meta = {
 			title: viewConfig.title,
 			icon: viewConfig.icon,
