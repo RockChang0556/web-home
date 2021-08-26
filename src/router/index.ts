@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:34:59
- * @LastEditTime: 2021-08-21 18:31:57
+ * @LastEditTime: 2021-08-22 15:01:44
  * @Description: 路由
  */
 import { createRouter, createWebHistory } from 'vue-router';
@@ -36,9 +36,9 @@ router.beforeEach((to, from, next) => {
 	// autoJump(router);
 
 	// 路由发生变化修改页面title
-	if (to.meta.title) {
-		document.title = `${to.meta.title} | 鹏`;
-	}
+	// if (to.meta.title) {
+	// 	document.title = `${to.meta.title} | 鹏`;
+	// }
 
 	next();
 });

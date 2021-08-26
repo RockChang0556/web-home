@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-12 20:26:57
- * @LastEditTime: 2021-08-16 16:04:53
+ * @LastEditTime: 2021-08-26 15:55:15
  * @Description:  重置密码
 -->
 <template>
@@ -111,7 +111,7 @@ export default defineComponent({
 
 		// 发送验证码前置校验, 返回true继续执行
 		const validatorEamil = async () => {
-			if (props.email) return true; // 设置页修改密码
+			if (props.email) return true; // 设置页修改密码, 邮箱禁用, 肯定注册了
 			const { has_user } = await UserApi.getIsRegister({
 				email: forgotPassForm.email,
 			});
