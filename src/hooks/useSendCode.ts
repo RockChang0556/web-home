@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-16 09:47:21
- * @LastEditTime: 2021-08-16 14:37:33
+ * @LastEditTime: 2021-11-11 16:14:59
  * @Description: 发送验证码
  */
 import { UserApi } from '@/services';
@@ -29,11 +29,11 @@ export function useSendCode(
 		disabled: false,
 	});
 	const onClickSendBtn = async () => {
-		if (beforeSend instanceof Function && !(await beforeSend())) {
-			return;
-		}
 		formRef.value.validateField('email', async (errMsg: string) => {
 			if (!errMsg) {
+				if (beforeSend instanceof Function && !(await beforeSend())) {
+					return;
+				}
 				try {
 					sendBtn.loading = true;
 					await UserApi.getEmailCode({
