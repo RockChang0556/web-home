@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-05 14:50:24
- * @LastEditTime: 2021-08-21 18:00:42
+ * @LastEditTime: 2021-12-02 17:30:53
  * @Description: 布局组件 - 头部
 -->
 <template>
@@ -47,6 +47,7 @@ import { defineComponent, PropType } from 'vue';
 import { useStore } from 'vuex';
 import { UserProps } from '@/store/modules/user';
 import Avatar from '@/components/avatar.vue';
+import router from '@/router';
 export default defineComponent({
 	name: 'global-header',
 	components: { Avatar },
@@ -60,6 +61,7 @@ export default defineComponent({
 		const store = useStore();
 		const logout = () => {
 			store.dispatch('user/logout');
+			router.push('/');
 		};
 		return {
 			logout,

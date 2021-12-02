@@ -1,11 +1,10 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 15:11:25
- * @LastEditTime: 2021-08-21 17:49:34
+ * @LastEditTime: 2021-12-02 17:30:37
  * @Description:
  */
 import { UserApi } from '@/services';
-import router from '@/router';
 import { removeToken } from '@/utils/token';
 
 export interface UserProps {
@@ -40,7 +39,6 @@ const actions = {
 	logout({ commit }: any) {
 		commit('setUserInfo', { isFetched: true });
 		removeToken();
-		router.push('/');
 	},
 	async getUserInfo({ commit }: any) {
 		const userInfo = await UserApi.getCurrentUser();

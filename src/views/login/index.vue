@@ -42,6 +42,9 @@
 import { defineComponent, ref } from 'vue';
 import LoginForm from './login-form.vue';
 import RegisterForm from './register-form.vue';
+import { useStore } from 'vuex';
+import { getQueryString } from '@/utils/util';
+
 export default defineComponent({
 	name: 'login-wrap',
 	components: {
@@ -50,6 +53,13 @@ export default defineComponent({
 	},
 	props: {},
 	setup() {
+		// 有logout参数,说明是退出登录
+		const isLogout = getQueryString('logout');
+		if (isLogout) {
+			const store = useStore();
+			store.dispatch('user/logout');
+		}
+
 		// 切换登录/注册
 		const { isRegisterActive, onSwitchRegister } = useLoginOrRegister();
 		return {
