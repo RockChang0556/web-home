@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-20 18:01:56
- * @LastEditTime: 2021-08-21 17:46:58
+ * @LastEditTime: 2021-12-17 18:25:54
  * @Description: 头像组件
 -->
 
@@ -108,13 +108,13 @@ export default defineComponent({
 			// 验证文件大小
 			const isBigger = file.size > 1024 * 1024 * 1;
 			if (isBigger) {
-				ElMessage.error('上传头像图片大小不能超过 1MB!');
+				ElMessage.error('头像大小不能超过 1 MB!');
 				return false;
 			}
 			// 验证格式是否支持
 			const notFormat = file.type.indexOf('image') === -1;
 			if (notFormat) {
-				ElMessage.error('上传头像图片只能是图片格式!');
+				ElMessage.error('头像只能是图片格式!');
 				return false;
 			}
 			// 验证图像是否符合要求
@@ -151,8 +151,9 @@ export default defineComponent({
 		const uploading = ref(false);
 		const handleCrop = async () => {
 			cropData.visible = false;
+			cropper.clear(); // 先清除再重新获取
 			// 获取裁剪数据
-			const blob: Blob = cropper.getBlob();
+			const blob: Blob = await cropper.getBlob();
 			// 构造为文件对象
 			const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
 			const formdata = new FormData();
@@ -167,7 +168,7 @@ export default defineComponent({
 				await store.dispatch('user/getUserInfo');
 				ElMessage.success('更新头像成功');
 			} catch (error) {
-				ElMessage.success('更新头像失败');
+				ElMessage.error('更新头像失败');
 			} finally {
 				uploading.value = false;
 			}

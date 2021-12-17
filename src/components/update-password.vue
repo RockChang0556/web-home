@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-12 20:26:57
- * @LastEditTime: 2021-12-17 11:43:01
+ * @LastEditTime: 2021-12-17 14:42:39
  * @Description:  重置密码
 -->
 <template>
@@ -121,7 +121,7 @@ export default defineComponent({
 			if (has_user) {
 				return true;
 			} else {
-				ElMessage.error('该账号尚未注册!');
+				ElMessage.error('该邮箱尚未注册!');
 				return false;
 			}
 		};
