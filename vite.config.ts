@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:31:57
- * @LastEditTime: 2021-11-11 16:06:58
+ * @LastEditTime: 2021-12-17 10:38:54
  * @Description:
  */
 import { defineConfig } from 'vite';
@@ -44,7 +44,7 @@ export default defineConfig({
 		minify: 'terser', // 混淆器，terser构建后文件体积更小
 	},
 	server: {
-		port: 8080,
+		port: 8000,
 		cors: true, // 默认启用并允许任何源
 		// open: true, // 在服务器启动时自动在浏览器中打开应用程序
 		//反向代理配置，注意rewrite写法，开始没看文档在这里踩了坑

@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:34:59
- * @LastEditTime: 2021-08-22 15:01:44
+ * @LastEditTime: 2021-12-03 11:09:05
  * @Description: 路由
  */
 import { createRouter, createWebHistory } from 'vue-router';
@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
 		next({ name: 'login' });
 		return;
 	}
-	// 权限验证
+	// 权限验证, -1-未登录 0-登录 1~5管理员
 	const userInfo = JSON.parse(
 		(sessionStorage.getItem('userInfo') as string) || '{}'
 	);
@@ -36,9 +36,9 @@ router.beforeEach((to, from, next) => {
 	// autoJump(router);
 
 	// 路由发生变化修改页面title
-	// if (to.meta.title) {
-	// 	document.title = `${to.meta.title} | 鹏`;
-	// }
+	if (to.meta.title) {
+		document.title = `${to.meta.title} | 鹏`;
+	}
 
 	next();
 });

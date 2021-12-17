@@ -1,9 +1,18 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-13 13:01:36
- * @LastEditTime: 2021-08-13 13:23:34
+ * @LastEditTime: 2021-12-17 11:11:22
  * @Description: 通用校验规则
  */
+
+export const captchaRule = [
+	{ required: true, message: '请输入图形验证码', trigger: 'blur' },
+	{
+		pattern: /^[A-Za-z0-9]{4}$/,
+		message: '图形验证码为4位字符',
+		trigger: 'blur',
+	},
+];
 
 export const passwordRule = [
 	{ required: true, message: '请输入密码', trigger: 'blur' },
@@ -32,10 +41,10 @@ export const phoneRule = [
 	},
 ];
 export const codeRule = [
-	{ required: true, message: '请输入验证码', trigger: 'blur' },
+	{ required: true, message: '请输入邮箱验证码', trigger: 'blur' },
 	{
 		pattern: /^[0-9]{4}$/,
-		message: '验证码为4位数字',
+		message: '邮箱验证码为4位数字',
 		trigger: 'blur',
 	},
 ];

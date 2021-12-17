@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:34:51
- * @LastEditTime: 2021-08-26 18:05:37
+ * @LastEditTime: 2021-12-17 11:39:16
  * @Description:  注册表单
 -->
 <template>
@@ -35,8 +35,11 @@
 					autocomplete="off"
 				></el-input>
 			</el-form-item>
-			<el-form-item label="验证码" prop="code" class="pass-code">
-				<el-input placeholder="验证码" v-model="registerForm.code"></el-input>
+			<el-form-item label="邮箱验证码" prop="code" class="pass-code">
+				<el-input
+					placeholder="邮箱验证码"
+					v-model="registerForm.code"
+				></el-input>
 				<el-button
 					type="text"
 					@click="onClickSendBtn"

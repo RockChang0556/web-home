@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-19 02:59:50
- * @LastEditTime: 2021-08-21 19:10:57
+ * @LastEditTime: 2021-12-03 11:17:51
  * @Description: 整合所有路由
  */
 
@@ -32,6 +32,9 @@ const routes: Array<RouteRecordRaw> = [
 		path: '/login',
 		name: 'login',
 		component: () => import('@/views/login/index.vue'),
+		meta: {
+			title: '登录/注册',
+		},
 	},
 	{
 		path: '/user',
@@ -39,6 +42,7 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/views/user/index.vue'),
 		meta: {
 			admin: 0,
+			title: '用户中心',
 		},
 		children: [...userRoutes],
 	},

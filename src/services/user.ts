@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-09 23:06:34
- * @LastEditTime: 2021-08-21 10:46:06
+ * @LastEditTime: 2021-12-17 10:47:08
  * @Description: 用户相关接口
  */
 // @ts-ignore
@@ -109,5 +109,10 @@ export default class User {
 			headers: { 'Content-Type': 'multipart/form-data' },
 		});
 		return data;
+	}
+
+	static async getCaptcha(params: any) {
+		const { data } = await get('/user/getCaptcha', params);
+		return data.data;
 	}
 }

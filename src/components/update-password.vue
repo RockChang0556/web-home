@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-12 20:26:57
- * @LastEditTime: 2021-11-11 16:20:47
+ * @LastEditTime: 2021-12-17 11:43:01
  * @Description:  重置密码
 -->
 <template>
@@ -33,8 +33,11 @@
 					:disabled="!!email"
 				></el-input>
 			</el-form-item>
-			<el-form-item label="验证码" prop="code" class="pass-code">
-				<el-input placeholder="验证码" v-model="forgotPassForm.code"></el-input>
+			<el-form-item label="邮箱验证码" prop="code" class="pass-code">
+				<el-input
+					placeholder="邮箱验证码"
+					v-model="forgotPassForm.code"
+				></el-input>
 				<el-button
 					type="text"
 					@click="onClickSendBtn"
@@ -46,14 +49,14 @@
 			<el-form-item label="密码" prop="password">
 				<el-input
 					type="password"
-					placeholder="密码"
+					placeholder="新密码"
 					v-model="forgotPassForm.password"
 					show-password
 				></el-input>
 			</el-form-item>
 			<el-form-item class="submit-btns">
 				<el-button
-					type="danger"
+					:type="email ? 'primary' : 'danger'"
 					round
 					:loading="submitBtnLoading"
 					@click="onSubmitForm"

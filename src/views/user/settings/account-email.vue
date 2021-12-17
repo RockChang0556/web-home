@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-15 17:36:23
- * @LastEditTime: 2021-08-16 09:57:07
+ * @LastEditTime: 2021-12-17 11:40:21
  * @Description: 设置 - 账号设置 - 更换邮箱
 -->
 <template>
@@ -15,8 +15,8 @@
 		<el-form-item label="账号" prop="email">
 			<el-input placeholder="请输入新邮箱" v-model="formData.email"></el-input>
 		</el-form-item>
-		<el-form-item label="验证码" prop="code" class="pass-code">
-			<el-input placeholder="验证码" v-model="formData.code"></el-input>
+		<el-form-item label="邮箱验证码" prop="code" class="pass-code">
+			<el-input placeholder="邮箱验证码" v-model="formData.code"></el-input>
 			<el-button
 				type="text"
 				@click="onClickSendBtn"

@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-08-20 17:30:17
+ * @LastEditTime: 2021-12-17 11:55:06
  * @Description: 登录表单
 -->
 <template>
@@ -35,6 +35,13 @@
 					@keyup.enter="onSubmitForm"
 				></el-input>
 			</el-form-item>
+			<el-form-item label="图形验证码" prop="captcha" class="login-captcha">
+				<el-input
+					placeholder="图形验证码"
+					v-model="loginForm.captcha"
+				></el-input>
+				<span @click="getCaptcha" v-html="captchaData"> </span>
+			</el-form-item>
 			<el-form-item>
 				<div class="forgot-pass">
 					<!-- <span
@@ -63,7 +70,9 @@ import { UserApi } from '@/services';
 import { ElMessage } from 'element-plus';
 import UpdatePassword from '@/components/update-password.vue';
 import { getQueryString } from '@/utils/util';
-import { passwordRule } from '@/config/rule';
+import { passwordRule, captchaRule } from '@/config/rule';
+import { v4 as uuidv4 } from 'uuid';
+import { debounce } from 'lodash';
 
 export default defineComponent({
 	name: 'login-content',
@@ -78,6 +87,8 @@ export default defineComponent({
 		const loginForm = reactive({
 			account: '',
 			password: '',
+			sid: '', // 验证码uuid
+			captcha: '',
 		});
 		const { loginRules } = useRules();
 		const setFormData = (data: { account?: string; password?: string }) => {
@@ -110,6 +121,7 @@ export default defineComponent({
 				loading.value = false;
 			}
 		};
+
 		// 监听是否当前tab, 离开当前tab清空表单值
 		watch(
 			() => props.active,
@@ -120,12 +132,31 @@ export default defineComponent({
 				}
 			}
 		);
+
+		// 获取图形验证码
+		const captchaData = ref('');
+		const getCaptcha = debounce(async () => {
+			let sid = localStorage.getItem('captchaId');
+			if (!sid) {
+				sid = uuidv4() as string;
+				localStorage.setItem('captchaId', sid);
+			}
+			loginForm.sid = sid;
+			captchaData.value = await UserApi.getCaptcha({ sid });
+		}, 100);
+
+		const created = () => {
+			getCaptcha();
+		};
+		created();
 		return {
 			loginForm,
 			loginRules,
 			loginFormRef,
 			onSubmitForm,
 			loading,
+			getCaptcha,
+			captchaData,
 		};
 	},
 });
@@ -148,6 +179,7 @@ function useRules() {
 			{ validator: validateAccount, trigger: 'blur' },
 		],
 		password: passwordRule,
+		captcha: captchaRule,
 	};
 	return { loginRules };
 }
@@ -168,6 +200,15 @@ function useRules() {
 			margin-bottom: 8px;
 			a {
 				color: #409eff;
+			}
+		}
+		.login-captcha .el-form-item__content {
+			display: flex;
+			> span {
+				width: 120px;
+				height: 40px;
+				margin-left: 10px;
+				cursor: pointer;
 			}
 		}
 	}
