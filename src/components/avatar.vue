@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-20 18:01:56
- * @LastEditTime: 2021-12-17 18:25:54
+ * @LastEditTime: 2021-12-24 14:44:24
  * @Description: 头像组件
 -->
 
@@ -142,8 +142,8 @@ export default defineComponent({
 			};
 			return true;
 		};
+		// 不写这个空函数 el-upload会请求一次undefined资源
 		const handleAvatarRequest = (file: any) => {
-			// 不写这个空函数 el-upload会请求一次undefined资源
 			return true;
 		};
 
@@ -151,11 +151,13 @@ export default defineComponent({
 		const uploading = ref(false);
 		const handleCrop = async () => {
 			cropData.visible = false;
-			cropper.clear(); // 先清除再重新获取
 			// 获取裁剪数据
 			const blob: Blob = await cropper.getBlob();
-			// 构造为文件对象
 			const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
+			// 构造为文件对象
+			// const file = await cropper.getFile({
+			// 	fileName: 'avatar.jpg',
+			// });
 			const formdata = new FormData();
 			formdata.append('file', file);
 			try {
@@ -171,6 +173,7 @@ export default defineComponent({
 				ElMessage.error('更新头像失败');
 			} finally {
 				uploading.value = false;
+				cropper.clear(); // 清除裁切框
 			}
 		};
 

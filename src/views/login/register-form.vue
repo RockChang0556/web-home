@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:34:51
- * @LastEditTime: 2021-12-17 11:39:16
+ * @LastEditTime: 2021-12-22 15:54:17
  * @Description:  注册表单
 -->
 <template>
@@ -138,6 +138,7 @@ export default defineComponent({
 					await UserApi.login({
 						account: registerForm.email,
 						password: registerForm.password,
+						register: true,
 					});
 					ElMessage.success('登录成功');
 					const redirectUrl = getQueryString('redirect_uri');

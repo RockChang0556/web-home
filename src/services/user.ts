@@ -1,14 +1,14 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-09 23:06:34
- * @LastEditTime: 2021-12-17 10:47:08
+ * @LastEditTime: 2021-12-22 15:59:28
  * @Description: 用户相关接口
  */
 // @ts-ignore
 import _axios, { post, get, put } from '@/utils/axios';
 import store from '@/store';
 import { saveTokens } from '@/utils/token';
-import { RegisterProps } from '@/types/service';
+import { RegisterProps, LoginProps } from '@/types/service';
 
 export default class User {
 	/**
@@ -34,7 +34,7 @@ export default class User {
 	 * @description: 登陆 - 获取tokens
 	 * @param {object} params
 	 */
-	static async login(params: { account: string; password: string }) {
+	static async login(params: LoginProps) {
 		const { data } = await post('/user/login', params);
 		const { data: tokens } = data;
 		saveTokens(tokens.access_token, tokens.refresh_token);
