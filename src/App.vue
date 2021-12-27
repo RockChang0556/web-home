@@ -1,8 +1,8 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:31:57
- * @LastEditTime: 2021-11-22 16:40:43
- * @Description: 
+ * @LastEditTime: 2021-12-27 18:03:38
+ * @Description: 入口文件
 -->
 <template>
 	<router-view v-slot="{ Component }" v-loading.fullscreen.lock="loading">
