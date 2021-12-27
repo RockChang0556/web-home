@@ -3,7 +3,7 @@
 		<global-header :user="currentUser"></global-header>
 		<header>
 			<h1>Welcome to my world</h1>
-			<p>这里是我的个人站, 不一定有什么内容</p>
+			<p>这里是我的个人站, 不一定有什么内容!</p>
 		</header>
 		<main>
 			<ul class="cards">
