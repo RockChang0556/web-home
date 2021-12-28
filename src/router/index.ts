@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:34:59
- * @LastEditTime: 2021-12-03 11:09:05
+ * @LastEditTime: 2021-12-27 21:24:43
  * @Description: 路由
  */
 import { createRouter, createWebHistory } from 'vue-router';
@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
 	const userAdmin: number = userInfo.admin ?? -1;
 	const pageAdmin: number = (to.meta.admin as number) ?? -1;
 	if (pageAdmin > userAdmin) {
-		ElMessage.error('您无此页面的权限哟');
+		// ElMessage.error('您无此页面的权限哟');
 		next({ name: '403' });
 		return;
 	}
