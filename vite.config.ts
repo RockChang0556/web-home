@@ -1,12 +1,15 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:31:57
- * @LastEditTime: 2021-12-28 11:52:27
+ * @LastEditTime: 2021-12-28 16:43:50
  * @Description:
  */
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 // import styleImport from 'vite-plugin-style-import';
 
 // https://vitejs.dev/config/
@@ -15,6 +18,12 @@ export default defineConfig({
 	plugins: [
 		vue(),
 		// element-plus 按需引入配置
+		AutoImport({
+			resolvers: [ElementPlusResolver()],
+		}),
+		Components({
+			resolvers: [ElementPlusResolver()],
+		}),
 		// styleImport({
 		// 	libs: [
 		// 		{

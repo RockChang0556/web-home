@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-12-17 11:55:06
+ * @LastEditTime: 2021-12-28 16:52:34
  * @Description: 登录表单
 -->
 <template>
@@ -206,8 +206,9 @@ function useRules() {
 			display: flex;
 			> span {
 				width: 120px;
-				height: 40px;
+				height: 50px;
 				margin-left: 10px;
+				transform: translateY(-5px);
 				cursor: pointer;
 			}
 		}
