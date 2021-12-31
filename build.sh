@@ -1,4 +1,6 @@
 
+# 未配置流水线之前本地打包发布脚本, 已废弃
+
 npm install --registry=https://registry.npm.taobao.org
 npm run build
 # 同步文件

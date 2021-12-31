@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-12-28 16:52:34
+ * @LastEditTime: 2021-12-31 16:50:40
  * @Description: 登录表单
 -->
 <template>
@@ -67,12 +67,11 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, watch } from 'vue';
 import { UserApi } from '@/services';
-import { ElMessage } from 'element-plus';
 import UpdatePassword from '@/components/update-password.vue';
 import { getQueryString } from '@/utils/util';
 import { passwordRule, captchaRule } from '@/config/rule';
 import { v4 as uuidv4 } from 'uuid';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 export default defineComponent({
 	name: 'login-content',
@@ -112,7 +111,7 @@ export default defineComponent({
 			try {
 				loading.value = true;
 				await UserApi.login(loginForm);
-				ElMessage.success('登录成功');
+				window.$message.success('登录成功');
 				setTimeout(() => {
 					const redirectUrl = getQueryString('redirect_uri');
 					location.href = redirectUrl || location.origin;

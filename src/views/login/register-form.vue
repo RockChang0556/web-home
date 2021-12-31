@@ -76,7 +76,6 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, watch } from 'vue';
 import { UserApi } from '@/services';
-import { ElMessage } from 'element-plus';
 import { emailRule, codeRule, passwordRule, nicknameRule } from '@/config/rule';
 import { useSendCode } from '@/hooks/useSendCode';
 import { getQueryString } from '@/utils/util';
@@ -133,14 +132,14 @@ export default defineComponent({
 			try {
 				loading.value = true;
 				await UserApi.register(registerForm);
-				ElMessage.success('注册成功, 即将为您自动登录');
+				window.$message.success('注册成功, 即将为您自动登录');
 				setTimeout(async () => {
 					await UserApi.login({
 						account: registerForm.email,
 						password: registerForm.password,
 						register: true,
 					});
-					ElMessage.success('登录成功');
+					window.$message.success('登录成功');
 					const redirectUrl = getQueryString('redirect_uri');
 					location.href = redirectUrl || location.origin;
 				}, 1000);

@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-20 18:01:56
- * @LastEditTime: 2021-12-24 14:44:24
+ * @LastEditTime: 2021-12-31 16:43:41
  * @Description: 头像组件
 -->
 
@@ -75,7 +75,6 @@
 import VuePictureCropper, { cropper } from 'vue-picture-cropper/dist/esm';
 import { computed, defineComponent, reactive, ref } from 'vue';
 import { avatarDefaultUrl } from '@/config/constants';
-import { ElMessage } from 'element-plus';
 import { UserApi } from '@/services';
 import store from '@/store';
 
@@ -108,13 +107,13 @@ export default defineComponent({
 			// 验证文件大小
 			const isBigger = file.size > 1024 * 1024 * 1;
 			if (isBigger) {
-				ElMessage.error('头像大小不能超过 1 MB!');
+				window.$message.error('头像大小不能超过 1 MB!');
 				return false;
 			}
 			// 验证格式是否支持
 			const notFormat = file.type.indexOf('image') === -1;
 			if (notFormat) {
-				ElMessage.error('头像只能是图片格式!');
+				window.$message.error('头像只能是图片格式!');
 				return false;
 			}
 			// 验证图像是否符合要求
@@ -125,11 +124,11 @@ export default defineComponent({
 				const w = image.width;
 				const h = image.height;
 				if (w < 50) {
-					ElMessage.error('图像宽度过小, 请选择大于50px的图像');
+					window.$message.error('图像宽度过小, 请选择大于50px的图像');
 					return false;
 				}
 				if (h < 50) {
-					ElMessage.error('图像高度过小, 请选择大于50px的图像');
+					window.$message.error('图像高度过小, 请选择大于50px的图像');
 					return false;
 				}
 				// 验证通过, 打开裁剪框
@@ -138,7 +137,7 @@ export default defineComponent({
 				return true;
 			};
 			image.onerror = () => {
-				ElMessage.error('获取本地图片出现错误, 请重试');
+				window.$message.error('获取本地图片出现错误, 请重试');
 			};
 			return true;
 		};
@@ -168,9 +167,9 @@ export default defineComponent({
 				await UserApi.update({ avatar_id: data.id, avatar_url: data.path });
 				// step3: 重新获取用户信息
 				await store.dispatch('user/getUserInfo');
-				ElMessage.success('更新头像成功');
+				window.$message.success('更新头像成功');
 			} catch (error) {
-				ElMessage.error('更新头像失败');
+				window.$message.error('更新头像失败');
 			} finally {
 				uploading.value = false;
 				cropper.clear(); // 清除裁切框

@@ -5,7 +5,6 @@
  * @Description: 发送验证码
  */
 import { UserApi } from '@/services';
-import { ElMessage } from 'element-plus';
 import { reactive } from 'vue';
 
 /** 发送验证码
@@ -40,7 +39,7 @@ export function useSendCode(
 						email: formData.email,
 						reason,
 					});
-					ElMessage.success('验证码成功发送至您的邮箱, 请注意查收');
+					window.$message.success('验证码成功发送至您的邮箱, 请注意查收');
 					// 按钮倒计时
 					const countDown = setInterval(() => {
 						if (sendBtn.time < 1) {

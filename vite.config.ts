@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-05 11:31:57
- * @LastEditTime: 2021-12-28 16:43:50
+ * @LastEditTime: 2021-12-31 16:03:39
  * @Description:
  */
 import { defineConfig } from 'vite';
@@ -10,7 +10,6 @@ import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-// import styleImport from 'vite-plugin-style-import';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,21 +23,6 @@ export default defineConfig({
 		Components({
 			resolvers: [ElementPlusResolver()],
 		}),
-		// styleImport({
-		// 	libs: [
-		// 		{
-		// 			libraryName: 'element-plus',
-		// 			esModule: true,
-		// 			ensureStyleFile: true,
-		// 			resolveStyle: name => {
-		// 				return `element-plus/lib/theme-chalk/${name}.css`;
-		// 			},
-		// 			resolveComponent: name => {
-		// 				return `element-plus/lib/${name}`;
-		// 			},
-		// 		},
-		// 	],
-		// }),
 	],
 	resolve: {
 		alias: {

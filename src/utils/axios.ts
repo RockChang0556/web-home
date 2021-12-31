@@ -2,7 +2,6 @@
  * 封装 axios
  */
 import axios from 'axios';
-import { ElMessage } from 'element-plus';
 import store from '@/store';
 import Config from '@/config';
 import router from '@/router';
@@ -185,7 +184,7 @@ _axios.interceptors.response.use(
 			if (Object.prototype.toString.call(message) === '[object Array]') {
 				[tipMessage] = message;
 			}
-			ElMessage.error(tipMessage);
+			window.$message.error(tipMessage);
 			reject(res);
 		});
 	},
@@ -195,14 +194,14 @@ _axios.interceptors.response.use(
 			error.code === 'ECONNABORTED' &&
 			error.message.indexOf('timeout') !== -1
 		) {
-			ElMessage.error('请求超时');
+			window.$message.error('请求超时');
 			return Promise.reject(error);
 		}
 		if (!error.response) {
-			ElMessage.error('请检查 API 是否异常');
+			window.$message.error('请检查 API 是否异常');
 			return Promise.reject(error);
 		}
-		ElMessage.error('网络异常');
+		window.$message.error('网络异常');
 		return Promise.reject(error);
 	}
 );

@@ -44,7 +44,6 @@ import store from '@/store';
 import { emailRule, codeRule } from '@/config/rule';
 import { UserProps } from '@/store/modules/user';
 import { UserApi } from '@/services';
-import { ElMessage } from 'element-plus';
 import { useSendCode } from '@/hooks/useSendCode';
 
 export default defineComponent({
@@ -80,7 +79,7 @@ export default defineComponent({
 						await UserApi.update({ email: formData.email });
 						// 重新获取用户信息
 						await store.dispatch('user/getUserInfo');
-						ElMessage.success('更新成功');
+						window.$message.success('更新成功');
 						context.emit('close');
 					} finally {
 						submitBtnLoading.value = false;

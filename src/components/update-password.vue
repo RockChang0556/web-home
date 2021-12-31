@@ -70,7 +70,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue';
-import { ElMessage } from 'element-plus';
 import { UserApi } from '@/services';
 import { emailRule, codeRule, passwordRule } from '@/config/rule';
 import { useSendCode } from '@/hooks/useSendCode';
@@ -102,7 +101,7 @@ export default defineComponent({
 					try {
 						submitBtnLoading.value = true;
 						await UserApi.updatePassword(forgotPassForm);
-						ElMessage.success('密码修改成功');
+						window.$message.success('密码修改成功');
 						onChangeVisible(false);
 					} catch (error) {
 					} finally {
@@ -121,7 +120,7 @@ export default defineComponent({
 			if (has_user) {
 				return true;
 			} else {
-				ElMessage.error('该邮箱尚未注册!');
+				window.$message.error('该邮箱尚未注册!');
 				return false;
 			}
 		};

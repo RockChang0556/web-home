@@ -37,7 +37,6 @@ import { phoneRule } from '@/config/rule';
 import { UserProps } from '@/store/modules/user';
 import { UserApi } from '@/services';
 import store from '@/store';
-import { ElMessage } from 'element-plus';
 export default defineComponent({
 	name: 'account-phone',
 	components: {},
@@ -65,7 +64,7 @@ export default defineComponent({
 						await UserApi.update(formData);
 						// 重新获取用户信息
 						await store.dispatch('user/getUserInfo');
-						ElMessage.success('更新成功');
+						window.$message.success('更新成功');
 						context.emit('close');
 					} finally {
 						submitBtnLoading.value = false;

@@ -69,7 +69,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType, reactive, ref } from 'vue';
-import { ElMessage } from 'element-plus';
 import store from '@/store';
 import { UserProps } from '@/store/modules/user';
 import { UserApi } from '@/services';
@@ -105,7 +104,7 @@ export default defineComponent({
 					await UserApi.update(formData);
 					// 重新获取用户信息
 					await store.dispatch('user/getUserInfo');
-					ElMessage.success('更新成功');
+					window.$message.success('更新成功');
 				} finally {
 					submitBtnLoading.value = false;
 				}
