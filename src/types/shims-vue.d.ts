@@ -4,7 +4,5 @@ declare module '*.vue' {
 	const component: DefineComponent<{}, {}, any>;
 	export default component;
 }
-
 declare module 'uuid';
 declare module 'lodash';
-declare module 'lodash-es';

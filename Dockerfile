@@ -1,5 +1,5 @@
 # build stage
-FROM node:14.17.4-alpine as build-stage
+FROM node:17.3.0-alpine as build-stage
 
 LABEL maintainer=peng0556@qq.com
 

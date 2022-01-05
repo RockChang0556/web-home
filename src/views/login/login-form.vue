@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-08 14:28:04
- * @LastEditTime: 2021-12-31 16:50:40
+ * @LastEditTime: 2021-12-31 17:05:07
  * @Description: 登录表单
 -->
 <template>
@@ -71,7 +71,7 @@ import UpdatePassword from '@/components/update-password.vue';
 import { getQueryString } from '@/utils/util';
 import { passwordRule, captchaRule } from '@/config/rule';
 import { v4 as uuidv4 } from 'uuid';
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 
 export default defineComponent({
 	name: 'login-content',
