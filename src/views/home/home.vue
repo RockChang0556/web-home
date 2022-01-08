@@ -7,13 +7,10 @@
 		</header>
 		<main>
 			<ul class="cards">
-				<li class="card red">
+				<li class="card red" @click="toChange">
 					<div class="card--image">✤</div>
-					<h2>Red</h2>
-					<p>
-						Red is the color at the long wavelength end of the visible spectrum
-						of light, next to orange and opposite violet.
-					</p>
+					<h2>吃什么</h2>
+					<p>解决小仙女的吃什么难题</p>
 				</li>
 				<li class="card green">
 					<div class="card--image">✦</div>
@@ -49,9 +46,12 @@ export default defineComponent({
 	setup() {
 		const store = useStore();
 		const currentUser = computed(() => store.state.user.userInfo);
-
+		const toChange = () => {
+			location.href = `${location.origin}/chang/`;
+		};
 		return {
 			currentUser,
+			toChange,
 		};
 	},
 });

@@ -1,7 +1,7 @@
 /*
  * @Author: Rock Chang
  * @Date: 2021-08-09 23:06:34
- * @LastEditTime: 2021-12-22 15:59:28
+ * @LastEditTime: 2022-01-07 14:23:01
  * @Description: 用户相关接口
  */
 // @ts-ignore
@@ -111,6 +111,11 @@ export default class User {
 		return data;
 	}
 
+	/** 获取图形验证码
+	 * @param {object} params
+	 * sid: string  本地 uuid
+	 * @return {*}
+	 */
 	static async getCaptcha(params: any) {
 		const { data } = await get('/user/getCaptcha', params);
 		return data.data;

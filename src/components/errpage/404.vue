@@ -1,14 +1,14 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-21 18:25:13
- * @LastEditTime: 2022-01-04 11:06:55
+ * @LastEditTime: 2022-01-08 22:48:24
  * @Description: 
 -->
 
 <template>
 	<div class="errpage-404">
 		<el-empty
-			image="https://s2.loli.net/2022/01/04/7Ss8G6CEYgVF3Xn.png"
+			image="https://s2.loli.net/2022/01/04/mwxYngtCbjL8W2I.png"
 			description="啊哦, 页面找不到了"
 		>
 			<router-link to="/">
