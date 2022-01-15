@@ -7,19 +7,15 @@
 		</header>
 		<main>
 			<ul class="cards">
-				<li class="card red" @click="toChange">
+				<li class="card red" @click="toChange('chang')">
 					<div class="card--image">✤</div>
 					<h2>吃什么</h2>
 					<p>解决小仙女的吃什么难题</p>
 				</li>
-				<li class="card green">
+				<li class="card green" @click="toChange('zha')">
 					<div class="card--image">✦</div>
-					<h2>Green</h2>
-					<p>
-						Green is the color between blue and yellow on the visible spectrum.
-						It is evoked by light which has a dominant wavelength of roughly
-						495–570 nm.
-					</p>
+					<h2>星纽带后台</h2>
+					<p>给星纽带小伙伴的临时系统, bug数未知, 解决时间待定...</p>
 				</li>
 				<li class="card blue">
 					<div class="card--image">❖</div>
@@ -46,8 +42,8 @@ export default defineComponent({
 	setup() {
 		const store = useStore();
 		const currentUser = computed(() => store.state.user.userInfo);
-		const toChange = () => {
-			location.href = `${location.origin}/chang/`;
+		const toChange = (val: string) => {
+			location.href = `${location.origin}/${val}/`;
 		};
 		return {
 			currentUser,
