@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-21 17:26:16
- * @LastEditTime: 2021-08-21 17:50:08
+ * @LastEditTime: 2023-03-17 16:39:15
  * @Description: 
 -->
 <template>
@@ -28,4 +28,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+.user-wrap {
+	padding-top: 70px;
+}
+</style>

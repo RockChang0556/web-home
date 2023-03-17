@@ -1,7 +1,7 @@
 <!--
  * @Author: Rock Chang
  * @Date: 2021-08-13 21:52:17
- * @LastEditTime: 2021-08-21 17:27:35
+ * @LastEditTime: 2023-03-17 16:40:05
  * @Description: 用户个人信息设置
 -->
 <template>
@@ -53,7 +53,6 @@ export default defineComponent({
 
 <style lang="less">
 .user-settings {
-	padding-top: 70px;
 	.user-settings-tabs {
 		max-width: 1200px;
 		min-width: 480px;
@@ -84,4 +83,3 @@ export default defineComponent({
 	}
 }
 </style>
-
